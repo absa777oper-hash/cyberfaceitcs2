@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CyberFaceit — Матчмейкинг 5 на 5 и 2 на 2 для CounterFlame</title>
+  <link rel="preconnect" href="https://googleapis.com">
+  <link rel="preconnect" href="https://gstatic.com" crossorigin>
+  <link href="https://googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-main: #09070a;
+      --bg-card: #120f14;
+      --bg-card-hover: #18141b;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --text-main: #ffffff;
+      --text-muted: #98939e;
+      --accent-yellow: #ffd028;
+      --accent-pink: #ff2a6d;
+      --accent-green: #22c55e;
+      --accent-red: #ef4444;
+      --glow-pink: rgba(255, 42, 109, 0.16);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+    }
+
+    body {
+      background: radial-gradient(circle at 50% 0%, #24101c 0%, var(--bg-main) 45%);
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* HEADER */
+    header {
+      position: sticky;
+      top: 14px;
+      z-index: 100;
+      padding: 0 16px;
+    }
+
+    .navbar {
+      max-width: 1140px;
+      margin: 0 auto;
+      background: rgba(18, 15, 20, 0.85);
+      backdrop-filter: blur(14px);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 10px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 16px;
+      letter-spacing: -0.02em;
+    }
+
+    .logo-img {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      object-fit: contain;
+      background: #000;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .nav-links a:hover {
+      color: #fff;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 10px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: 1px solid transparent;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .btn-pink {
+      background: var(--accent-pink);
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(255, 42, 109, 0.35);
+    }
+
+    .btn-pink:hover {
+      filter: brightness(1.1);
+      transform: translateY(-1px);
+    }
+
+    .btn-yellow {
+      background: var(--accent-yellow);
+      color: #09070a;
+      box-shadow: 0 4px 20px rgba(255, 208, 40, 0.25);
+    }
+
+    .btn-yellow:hover {
+      filter: brightness(1.06);
+      transform: translateY(-1px);
+    }
+
+    .btn-dark {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: var(--border-color);
+      color: #fff;
+    }
+
+    .btn-dark:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    .burger {
+      display: none;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border-color);
+      color: #fff;
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    /* SECTION HEADERS */
+    .section {
+      padding: 80px 0;
+    }
+
+    .section-tag {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent-pink);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 14px;
+    }
+
+    .section-subtitle {
+      font-size: 15px;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    /* HERO */
+    .hero {
+      padding: 64px 0 40px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(34px, 5.5vw, 56px);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 18px;
+    }
+
+    .hero p {
+      color: var(--text-muted);
+      font-size: 16px;
+      max-width: 620px;
+      margin: 0 auto 28px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .hero-buttons .btn {
+      padding: 14px 24px;
+      font-size: 13px;
+    }
+
+    .hero-pills {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 44px;
+    }
+
+    .pill {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-color);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+
+    /* PHONE MOCKUP FOR REAL SCREENSHOTS */
+    .phone-frame {
+      max-width: 310px;
+      margin: 0 auto;
+      background: #0d0b0f;
+      border: 4px solid #26212b;
+      border-radius: 38px;
+      padding: 8px;
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.85), 0 0 60px var(--glow-pink);
+      overflow: hidden;
+    }
+
+    .app-screenshot {
+      width: 100%;
+      height: auto;
+      border-radius: 30px;
+      display: block;
+    }
+
+    .toast-stack {
+      max-width: 360px;
+      margin: 22px auto 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .toast {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-left: 3px solid var(--accent-pink);
+      border-radius: 12px;
+      padding: 12px 16px;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .toast-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(255, 42, 109, 0.15);
+      color: var(--accent-pink);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+
+    .toast h4 {
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .toast p {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    /* KEY METRICS */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: 32px;
+    }
+
+    .metric-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 24px 16px;
+      text-align: center;
+    }
+
+    .metric-card strong {
+      display: block;
+      font-size: 28px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .metric-card span {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* GRIDS */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 36px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 24px;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .card:hover {
+      background: var(--bg-card-hover);
+      border-color: rgba(255, 255, 255, 0.16);
+    }
+
+    .card-kicker {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--accent-pink);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .card h3 {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    /* STEPS */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 14px;
+      margin-top: 36px;
+    }
+
+    .step-num {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--accent-pink);
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    /* RATING SPLIT */
+    .rating-layout {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 24px;
+      align-items: center;
+      margin-top: 36px;
+    }
+
+    .rating-cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    /* LEAGUES & PLATFORM STATUS */
+    .league-icon-img {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      object-fit: contain;
+      margin-bottom: 14px;
+      background: #000;
+      padding: 4px;
+      border: 1px solid var(--border-color);
+    }
+
+    .platform-box {
+      margin-top: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      text-align: left;
+    }
+
+    .platform-badges {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .platform-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    /* MAP POOL (4 MAPS WITH EMBLEM IMAGES) */
+    .maps-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 36px;
+    }
+
+    .map-card {
+      position: relative;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      overflow: hidden;
+    }
+
+    .map-card.banned {
+      opacity: 0.6;
+    }
+
+    .map-card.banned::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: -15%;
+      width: 130%;
+      height: 2px;
+      background: rgba(239, 68, 68, 0.8);
+      transform: rotate(32deg);
+      pointer-events: none;
+    }
+
+    .map-card.active {
+      border-color: var(--accent-pink);
+      box-shadow: 0 0 30px rgba(255, 42, 109, 0.2);
+      background: linear-gradient(180deg, rgba(255,42,109,0.1) 0%, var(--bg-card) 100%);
+    }
+
+    .map-top {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .map-num {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .map-status {
+      font-size: 10px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 6px;
+      text-transform: uppercase;
+    }
+
+    .status-ban {
+      background: rgba(239, 68, 68, 0.12);
+      color: var(--accent-red);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    .status-play {
+      background: rgba(34, 197, 94, 0.14);
+      color: var(--accent-green);
+      border: 1px solid rgba(34, 197, 94, 0.35);
+    }
+
+    .map-emblem {
+      width: 96px;
+      height: 96px;
+      object-fit: contain;
+      border-radius: 12px;
+    }
+
+    .map-name {
+      text-align: center;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    /* FAIR PLAY & PROFILE SPLIT */
+    .split-section {
+      display: grid;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 32px;
+      align-items: start;
+    }
+
+    .fair-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .fair-item h4 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .fair-item h4 span {
+      color: var(--accent-pink);
+      font-size: 13px;
+    }
+
+    .fair-item p {
+      font-size: 13.5px;
+      color: var(--text-muted);
+    }
+
+    .voice-box {
+      margin-top: 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-left: 3px solid var(--accent-green);
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* FAQ */
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .faq-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      color: #fff;
+      padding: 18px 20px;
+      text-align: left;
+      font-size: 15px;
+      font-weight: 700;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .faq-answer {
+      padding: 0 20px 18px;
+      font-size: 13.5px;
+      color: var(--text-muted);
+      display: none;
+    }
+
+    .faq-item.open .faq-answer {
+      display: block;
+    }
+
+    .faq-item.open .faq-arrow {
+      transform: rotate(180deg);
+    }
+
+    /* CTA BANNER */
+    .cta-box {
+      text-align: center;
+      padding: 64px 20px;
+      background: radial-gradient(circle at 50% 50%, rgba(255, 42, 109, 0.12) 0%, transparent 70%);
+    }
+
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 24px 0 16px;
+    }
+
+    .cta-buttons .btn {
+      padding: 14px 26px;
+      font-size: 13px;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border-color);
+      padding: 48px 0 32px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 32px;
+      margin-bottom: 36px;
+    }
+
+    .footer-col h5 {
+      color: #fff;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 14px;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer-col a:hover {
+      color: #fff;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid var(--border-color);
+      padding-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 12px;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 960px) {
+      .nav-links { display: none; }
+      .burger { display: flex; }
+      .metrics-grid, .maps-grid { grid-template-columns: repeat(2, 1fr); }
+      .grid-3, .steps-grid { grid-template-columns: 1fr; }
+      .rating-layout, .split-section, .footer-top { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 540px) {
+      .rating-cards { grid-template-columns: 1fr; }
+      .navbar .btn-pink { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="navbar">
+      <a href="#" class="logo">
+        <img src="logo.png" alt="CyberFaceit" class="logo-img">
+        <span>CyberFaceit</span>
+      </a>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="#features">Возможности</a>
+        <a href="#how-it-works">Как это работает</a>
+        <a href="#rating">Рейтинг</a>
+        <a href="#fair-play">Честная игра</a>
+        <a href="#faq">Вопросы</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="https://cyberfaceitcs.vercel.app" target="_blank" class="btn btn-pink">Играть в браузере</a>
+        <a href="https://www.rustore.ru/catalog/app/com.cyberfaceit.cs" target="_blank" class="btn btn-dark">Скачать</a>
+        <button class="burger" id="burgerBtn" aria-label="Меню">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <span class="section-tag">COUNTER FLAME • МАТЧИ 5 НА 5 И 2 НА 2</span>
+      <h1>Матчмейкинг,<br>где решает скилл</h1>
+      <p>Собирайте пати, ищите соперников по рейтингу, баньте карты и играйте 5 на 5 или 2 на 2 с командным голосом. Победы, поражения и личная статистика меняют ELO — случайных тиммейтов из публичных лобби здесь нет.</p>
+
+      <div class="hero-buttons">
+        <a href="https://www.rustore.ru/catalog/app/com.cyberfaceit.cs" target="_blank" class="btn btn-yellow">⬇ Скачать в RuStore</a>
+        <a href="https://cyberfaceitcs.vercel.app" target="_blank" class="btn btn-dark">Играть в браузере</a>
+      </div>
+
+      <div class="hero-pills">
+        <span class="pill">3 ЛИГИ</span>
+        <span class="pill">4 КАРТЫ В ПУЛЕ</span>
+        <span class="pill">10 УРОВНЕЙ</span>
+        <span class="pill">🖥️ PC / 📱 MOBILE СТАТУСЫ</span>
+      </div>
+
+      <div class="phone-frame">
+        <img src="screen-play.png" alt="Интерфейс матчмейкинга CyberFaceit" class="app-screenshot">
+      </div>
+
+      <div class="toast-stack">
+        <div class="toast">
+          <div class="toast-icon">🔍</div>
+          <div>
+            <h4>Матч найден</h4>
+            <p>Все игроки подтвердили участие • переходим к бану карт</p>
+          </div>
+        </div>
+        <div class="toast">
+          <div class="toast-icon">🚫</div>
+          <div>
+            <h4>Ваш ход — забаньте карту</h4>
+            <p>Осталось 2 карты • 30 секунд на ход</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 30px;">
+    <div class="container text-center">
+      <h2 class="section-title">Всё, что нужно для серьёзной катки</h2>
+      <p class="section-subtitle">Платформа берёт на себя подбор, бан карт, лобби и подсчёт результата. Вам остаётся играть.</p>
+
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <strong>5×5 / 2×2</strong>
+          <span>Форматы матчей</span>
+        </div>
+        <div class="metric-card">
+          <strong>4</strong>
+          <span>Карты в пуле</span>
+        </div>
+        <div class="metric-card">
+          <strong>1–10</strong>
+          <span>Уровней рейтинга</span>
+        </div>
+        <div class="metric-card">
+          <strong>3</strong>
+          <span>Лиги</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="features">
+    <div class="container text-center">
+      <span class="section-tag">ВОЗМОЖНОСТИ</span>
+      <h2 class="section-title">Турнирные правила в мобильном приложении</h2>
+      <p class="section-subtitle">Каждый матч проходит один и тот же путь: подбор, бан карт, лобби, результат, рейтинг. Никаких договорённостей в чате.</p>
+
+      <div class="grid-3" style="text-align:left;">
+        <div class="card">
+          <span class="card-kicker">ELO</span>
+          <h3>Подбор по ELO</h3>
+          <p>Очередь ищет соперников близкого рейтинга и расширяет диапазон, пока вы ждёте. Команды делятся так, чтобы средний рейтинг сторон был как можно ближе.</p>
+        </div>
+        <div class="card">
+          <span class="card-kicker">PARTY</span>
+          <h3>Пати с друзьями</h3>
+          <p>Зовите друзей по статик-ID, собирайте состав до пяти человек и заходите в очередь вместе. Пати не разбивается при формировании команд.</p>
+        </div>
+        <div class="card">
+          <span class="card-kicker">VETO</span>
+          <h3>Бан карт капитанами</h3>
+          <p>Четыре карты, три бана по очереди — остаётся одна. Ход длится 30 секунд, по таймауту карта банится автоматически, так что этап никогда не зависает.</p>
+        </div>
+        <div class="card">
+          <span class="card-kicker">VOICE</span>
+          <h3>Командный голос</h3>
+          <p>Голосовой чат встроен в приложение: отдельная комната на пати и на каждую команду в матче. Микшер громкости, мут в один тап, сторонние приложения не нужны.</p>
+        </div>
+        <div class="card">
+          <span class="card-kicker">SEASON</span>
+          <h3>Лидерборд и сезоны</h3>
+          <p>Таблица лидеров по каждой лиге и сезону, ранг в профиле, история матчей с K/D/A и дельтой рейтинга за каждую игру.</p>
+        </div>
+        <div class="card">
+          <span class="card-kicker">SHOP</span>
+          <h3>Магазин и косметика</h3>
+          <p>Рамки, баннеры, флаги, эмодзи и цвет ника за Cyber Coin. Чёрный рынок открывается по расписанию со скидками 40–70%.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="how-it-works">
+    <div class="container text-center">
+      <span class="section-tag">КАК ЭТО РАБОТАЕТ</span>
+      <h2 class="section-title">От очереди до рейтинга — пять шагов</h2>
+      <p class="section-subtitle">Сервер ведёт матч сам: у каждой фазы есть таймер и правило выхода.</p>
+
+      <div class="steps-grid" style="text-align:left;">
+        <div class="card">
+          <span class="step-num">01</span>
+          <h3>Очередь</h3>
+          <p>Выбираете лигу и жмёте «Найти матч». Приложение показывает, сколько людей в игре и в поиске прямо сейчас.</p>
+        </div>
+        <div class="card">
+          <span class="step-num">02</span>
+          <h3>Подтверждение</h3>
+          <p>Матч собран — все игроки подтверждают участие за 30 секунд. Кто-то отказался: остальные возвращаются в очередь без потери места.</p>
+        </div>
+        <div class="card">
+          <span class="step-num">03</span>
+          <h3>Бан карт</h3>
+          <p>Капитаны по очереди убирают карты, пока не останется одна. Капитана выбирает жребий: чаще им становится самый опытный игрок команды, а в пати из 3+ — её лидер.</p>
+        </div>
+        <div class="card">
+          <span class="step-num">04</span>
+          <h3>Лобби</h3>
+          <p>Сервер случайно выбирает хоста из двух капитанов и раскрывает его игровой ID из CounterFlame. Копируете, заходите в лобби, играете.</p>
+        </div>
+        <div class="card">
+          <span class="step-num">05</span>
+          <h3>Результат</h3>
+          <p>Любой из участников загружает скриншот таблицы. Счёт распознаётся автоматически, команды голосуют, модератор подтверждает — и ELO пересчитывается.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="rating">
+    <div class="container text-center">
+      <span class="section-tag">РЕЙТИНГ</span>
+      <h2 class="section-title">Понятная система: ELO, уровни, сезоны</h2>
+      <p class="section-subtitle">Никаких скрытых коэффициентов. Начисление очков зависит от исхода матча и вашего личного вклада в игру.</p>
+
+      <div class="rating-layout" style="text-align:left;">
+        <div class="rating-cards">
+          <div class="card">
+            <h3>Старт с 0 ELO</h3>
+            <p>Новый игрок и новый сезон начинаются с 0 очков и первого уровня. Ниже нуля рейтинг не опускается.</p>
+          </div>
+          <div class="card">
+            <h3>ELO по статистике</h3>
+            <p>Победа +25 / поражение −18, плюс бонус −6…+12 за (К−Д), помощь, урон за раунд и %ГЛ.</p>
+          </div>
+          <div class="card">
+            <h3>Десять уровней</h3>
+            <p>Уровень пересчитывается после каждого матча и может падать — он отражает текущий рейтинг, а не сумму сыгранного.</p>
+          </div>
+          <div class="card">
+            <h3>Сезоны и ладдеры</h3>
+            <p>Сезон обнуляет статистику, но не удаляет историю — прошлые сезоны остаются в профиле. Внутри месяца работают ладдеры по группам уровней: они не влияют на ELO и не делят матчмейкинг.</p>
+          </div>
+        </div>
+
+        <div class="phone-frame">
+          <img src="screen-top.png" alt="Лидерборд CyberFaceit" class="app-screenshot">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container text-center">
+      <span class="section-tag">ЛИГИ И УСТРОЙСТВА</span>
+      <h2 class="section-title">Три лиги, свой рейтинг в каждой</h2>
+      <p class="section-subtitle">Статистика считается отдельно по каждой лиге и сезону — переход в другую лигу не переносит ELO.</p>
+
+      <div class="grid-3" style="text-align:left;">
+        <div class="card">
+          <img src="league-default.png" alt="Лига Default" class="league-icon-img">
+          <h3>DEFAULT</h3>
+          <p>Открытый рейтинговый матчмейкинг. Выдаётся всем игрокам сразу после регистрации.</p>
+        </div>
+
+        <div class="card">
+          <img src="league-qual.png" alt="Лига Qual" class="league-icon-img">
+          <h3>QUAL</h3>
+          <p>Покупается в магазине или открывается бесплатно за топ-30 месячного ладдера 8–10 уровня. Держится, пока выполняете норматив по матчам и K/D.</p>
+        </div>
+
+        <div class="card">
+          <img src="league-pro.png" alt="Лига Pro" class="league-icon-img">
+          <h3>PRO</h3>
+          <p>Закрытая элитная лига — доступ выдаётся вручную.</p>
+        </div>
+      </div>
+
+      <div class="card platform-box">
+        <div>
+          <span class="card-kicker">СТАТУС ИГРОКА</span>
+          <h3>Значок PC или Телефон в профиле</h3>
+          <p>В приложении игрок сам выбирает платформу, с которой играет — в лобби и профиле рядом с ником отображается значок PC или Телефона.</p>
+        </div>
+        <div class="platform-badges">
+          <span class="platform-badge">🖥️ PC — Играет с компьютера</span>
+          <span class="platform-badge">📱 Телефон — Играет с мобильного</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container text-center">
+      <span class="section-tag">КАРТЫ</span>
+      <h2 class="section-title">Активный пул карт</h2>
+      <p class="section-subtitle">Четыре карты — после трёх банов всегда остаётся ровно одна. Играть только на любимой карте не выйдет.</p>
+
+      <div class="maps-grid">
+        <div class="map-card banned">
+          <div class="map-top">
+            <span class="map-num">01</span>
+            <span class="map-status status-ban">БАН</span>
+          </div>
+          <img src="map-dust2.png" alt="Dust 2" class="map-emblem">
+          <div class="map-name">DUST 2</div>
+        </div>
+
+        <div class="map-card banned">
+          <div class="map-top">
+            <span class="map-num">02</span>
+            <span class="map-status status-ban">БАН</span>
+          </div>
+          <img src="map-vertigo.png" alt="Vertigo" class="map-emblem">
+          <div class="map-name">VERTIGO</div>
+        </div>
+
+        <div class="map-card active">
+          <div class="map-top">
+            <span class="map-num">03</span>
+            <span class="map-status status-play">ИГРАЕМ</span>
+          </div>
+          <img src="map-inferno.png" alt="Inferno" class="map-emblem">
+          <div class="map-name">INFERNO</div>
+        </div>
+
+        <div class="map-card banned">
+          <div class="map-top">
+            <span class="map-num">04</span>
+            <span class="map-status status-ban">БАН</span>
+          </div>
+          <img src="map-mirage.png" alt="Mirage" class="map-emblem">
+          <div class="map-name">MIRAGE</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="fair-play">
+    <div class="container">
+      <div class="split-section">
+        <div>
+          <span class="section-tag">ЧЕСТНАЯ ИГРА</span>
+          <h2 class="section-title">Результат нельзя подделать в одиночку</h2>
+          <p class="section-subtitle" style="margin:0;">Матч закрывается только тогда, когда его подтвердили обе стороны и живой модератор.</p>
+        </div>
+
+        <div class="fair-list">
+          <div class="fair-item">
+            <h4><span>01</span> Скриншот вместо честного слова</h4>
+            <p>Итог матча подтверждается скриншотом таблицы. Один и тот же файл нельзя переиспользовать в другом матче — проверка идёт по хешу.</p>
+          </div>
+          <div class="fair-item">
+            <h4><span>02</span> Голосование обеих команд</h4>
+            <p>Скриншот уходит на голосование всем участникам матча. Пока стороны не согласятся, матч не двигается дальше.</p>
+          </div>
+          <div class="fair-item">
+            <h4><span>03</span> Ручная модерация</h4>
+            <p>Финальные K/D/A и счёт вносит модератор. Только после этого начисляется рейтинг — отменить уже проверенный матч голосованием нельзя.</p>
+          </div>
+          <div class="fair-item">
+            <h4><span>04</span> Жалобы и блокировки</h4>
+            <p>На игрока можно пожаловаться прямо из матча: читы, токсичность, руин, выход из игры. Аккаунт под подозрением уходит на проверку и теряет доступ к матчам.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="faq">
+    <div class="container">
+      <div class="split-section" style="margin-bottom: 64px; align-items: center;">
+        <div>
+          <span class="section-tag">ПРОФИЛЬ И МАГАЗИН</span>
+          <h2 class="section-title">Профиль, который видно</h2>
+          <p class="section-subtitle" style="margin:0;">Рамка, баннер, флаг региона, статус устройства (PC или Телефон), эмодзи и цвет ника — всё это видно соперникам в лобби и в таблице лидеров.</p>
+
+          <div class="voice-box">
+            <span style="color:var(--accent-green); font-size:18px;">🎙️</span>
+            <div>
+              <strong style="font-size:13px; display:block;">Голос команды подключён</strong>
+              <span style="font-size:11px; color:var(--text-muted);">Только своя команда — соперник вас не слышит</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="phone-frame">
+          <img src="screen-shop.png" alt="Магазин и профиль CyberFaceit" class="app-screenshot">
+        </div>
+      </div>
+
+      <div class="split-section">
+        <div>
+          <span class="section-tag">ВОПРОСЫ</span>
+          <h2 class="section-title">Коротко о главном</h2>
+        </div>
+
+        <div class="faq-list">
+          <div class="faq-item open">
+            <button class="faq-question">
+              <span>CyberFaceit — это отдельная игра?</span>
+              <span class="faq-arrow">⌃</span>
+            </button>
+            <div class="faq-answer">
+              Нет. Играете вы в самом CounterFlame, а приложение отвечает за подбор соперников, бан карт, голосовой чат и рейтинг. Матч проходит в обычном лобби CounterFlame, хоста назначает сервер.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>Нужен ли аккаунт CounterFlame?</span>
+              <span class="faq-arrow">⌄</span>
+            </button>
+            <div class="faq-answer">
+              Да, при регистрации указывается ваш игровой ID из CounterFlame — по нему соперники находят лобби, а платформа связывает результаты с профилем.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>Сколько стоит?</span>
+              <span class="faq-arrow">⌄</span>
+            </button>
+            <div class="faq-answer">
+              Матчмейкинг, пати, голосовой чат, рейтинг и лидерборд бесплатны. Платные — только косметика, премиум-подписка и лига QUAL, которую вдобавок можно получить бесплатно за топ месячного ладдера.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>Что будет, если соперник выйдет из матча?</span>
+              <span class="faq-arrow">⌄</span>
+            </button>
+            <div class="faq-answer">
+              Матч можно отменить голосованием: большинство голосов — и он закрывается без изменения рейтинга. Если результат так и не подтвердили, матч автоматически отменяется через два часа. На бросившего игрока подаётся жалоба.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>Можно ли играть с друзьями?</span>
+              <span class="faq-arrow">⌄</span>
+            </button>
+            <div class="faq-answer">
+              Да. Добавляйте друзей по статик-ID, собирайте пати для 5 на 5 или 2 на 2 — очередь ищет соперников на всю группу, а голосовая комната создаётся автоматически.
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>На каких устройствах работает?</span>
+              <span class="faq-arrow">⌄</span>
+            </button>
+            <div class="faq-answer">
+              Приложение доступно для Android в RuStore. С компьютера или iOS можно играть без установки — в веб-версии в браузере. В профиле можно указать, с какого устройства вы играете (PC или Телефон), чтобы это отображалось в матче.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-box">
+    <div class="container">
+      <h2 class="section-title">Соберите свою пятёрку</h2>
+      <p class="section-subtitle">CyberFaceit уже доступен для Android в RuStore и прямо в браузере на любом устройстве.</p>
+
+      <div class="cta-buttons">
+        <a href="https://www.rustore.ru/catalog/app/com.cyberfaceit.cs" target="_blank" class="btn btn-yellow">▶ СКАЧАТЬ В RUSTORE</a>
+        <a href="https://cyberfaceitcs.vercel.app" target="_blank" class="btn btn-dark">🌐 ИГРАТЬ В БРАУЗЕРЕ →</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-top">
+        <div>
+          <a href="#" class="logo" style="margin-bottom:12px;">
+            <img src="logo.png" alt="CyberFaceit" class="logo-img">
+            <span>CyberFaceit</span>
+          </a>
+          <p style="max-width:280px;">Соревновательный матчмейкинг 5×5 и 2×2 для CounterFlame.</p>
+        </div>
+
+        <div class="footer-col">
+          <h5>Продукт</h5>
+          <ul>
+            <li><a href="#features">Возможности</a></li>
+            <li><a href="#how-it-works">Как это работает</a></li>
+            <li><a href="#rating">Рейтинг</a></li>
+            <li><a href="#faq">Вопросы</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>Контакты и ссылки</h5>
+          <ul>
+            <li><a href="https://cyberfaceitcs.vercel.app" target="_blank">Веб-версия платформы</a></li>
+            <li><a href="https://www.rustore.ru/catalog/app/com.cyberfaceit.cs" target="_blank">Скачать в RuStore</a></li>
+            <li><a href="mailto:absa777oper@gmail.com">absa777oper@gmail.com</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 CyberFaceit. Все права защищены.</span>
+        <span>CyberFaceit — независимая платформа для CounterFlame.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // FAQ Accordion
+    document.querySelectorAll('.faq-question').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.parentElement;
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(i => {
+          i.classList.remove('open');
+          i.querySelector('.faq-arrow').textContent = '⌄';
+        });
+        if (!isOpen) {
+          item.classList.add('open');
+          btn.querySelector('.faq-arrow').textContent = '⌃';
+        }
+      });
+    });
+
+    // Mobile Menu Toggle
+    const burgerBtn = document.getElementById('burgerBtn');
+    const navLinks = document.getElementById('navLinks');
+    burgerBtn.addEventListener('click', () => {
+      if (navLinks.style.display === 'flex') {
+        navLinks.style.display = 'none';
+      } else {
+        navLinks.style.display = 'flex';
+        navLinks.style.flexDirection = 'column';
+        navLinks.style.position = 'absolute';
+        navLinks.style.top = '64px';
+        navLinks.style.left = '16px';
+        navLinks.style.right = '16px';
+        navLinks.style.background = '#120f14';
+        navLinks.style.padding = '16px';
+        navLinks.style.borderRadius = '14px';
+        navLinks.style.border = '1px solid rgba(255,255,255,0.1)';
+      }
+    });
+  </script>
+</body>
+</html>
