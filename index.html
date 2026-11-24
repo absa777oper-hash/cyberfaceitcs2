@@ -3,23 +3,27 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CyberFaceit — Матчмейкинг 5 на 5 и 2 на 2 для CounterFlame</title>
+  <title>CyberFaceit — Матчмейкинг CounterFlame</title>
+  <link rel="icon" type="image/png" href="logo.png" />
   <link rel="preconnect" href="https://googleapis.com">
   <link rel="preconnect" href="https://gstatic.com" crossorigin>
-  <link href="https://googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-main: #09070a;
-      --bg-card: #120f14;
-      --bg-card-hover: #18141b;
+      --bg-main: #09080b;
+      --bg-card: #121016;
+      --bg-card-hover: #191520;
       --border-color: rgba(255, 255, 255, 0.08);
-      --text-main: #ffffff;
-      --text-muted: #98939e;
-      --accent-yellow: #ffd028;
+      --border-pink: rgba(255, 42, 109, 0.35);
       --accent-pink: #ff2a6d;
-      --accent-green: #22c55e;
-      --accent-red: #ef4444;
-      --glow-pink: rgba(255, 42, 109, 0.16);
+      --accent-pink-hover: #e01b5a;
+      --accent-pink-glow: rgba(255, 42, 109, 0.25);
+      --accent-yellow: #facc15;
+      --accent-yellow-hover: #eab308;
+      --accent-green: #10b981;
+      --text-main: #ffffff;
+      --text-muted: #9ca3af;
+      --text-dim: #6b7280;
     }
 
     * {
@@ -30,78 +34,90 @@
 
     html {
       scroll-behavior: smooth;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: var(--bg-main);
-      color: var(--text-main);
     }
 
     body {
-      background: radial-gradient(circle at 50% 0%, #24101c 0%, var(--bg-main) 45%);
-      overflow-x: hidden;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
       line-height: 1.5;
+      overflow-x: hidden;
+      background-image: radial-gradient(circle at 50% 0%, rgba(255, 42, 109, 0.16) 0%, transparent 55%);
     }
 
     a {
-      color: inherit;
       text-decoration: none;
+      color: inherit;
     }
 
     .container {
+      width: 100%;
       max-width: 1140px;
       margin: 0 auto;
       padding: 0 20px;
     }
 
-    /* HEADER */
-    header {
-      position: sticky;
-      top: 14px;
-      z-index: 100;
-      padding: 0 16px;
+    /* Плавное проявление при прокрутке */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .navbar {
-      max-width: 1140px;
-      margin: 0 auto;
-      background: rgba(18, 15, 20, 0.85);
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Верхняя шапка */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(9, 8, 11, 0.88);
       backdrop-filter: blur(14px);
-      border: 1px solid var(--border-color);
-      border-radius: 16px;
-      padding: 10px 18px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .nav-inner {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      height: 68px;
       gap: 16px;
     }
 
-    .logo {
+    .brand {
       display: flex;
       align-items: center;
       gap: 10px;
       font-weight: 800;
-      font-size: 16px;
+      font-size: 18px;
       letter-spacing: -0.02em;
     }
 
-    .logo-img {
+    .brand img {
       width: 32px;
       height: 32px;
       border-radius: 8px;
       object-fit: contain;
-      background: #000;
     }
 
     .nav-links {
       display: flex;
       align-items: center;
       gap: 24px;
+    }
+
+    .nav-links a {
       font-size: 13px;
-      color: var(--text-muted);
       font-weight: 500;
+      color: var(--text-muted);
+      transition: color 0.2s;
     }
 
     .nav-links a:hover {
-      color: #fff;
+      color: var(--accent-pink);
     }
 
     .nav-actions {
@@ -110,251 +126,272 @@
       gap: 10px;
     }
 
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      font-size: 12px;
-      font-weight: 700;
-      padding: 10px 16px;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      border: 1px solid transparent;
-      text-transform: uppercase;
-      letter-spacing: 0.03em;
-    }
-
-    .btn-pink {
-      background: var(--accent-pink);
-      color: #fff;
-      box-shadow: 0 4px 20px rgba(255, 42, 109, 0.35);
-    }
-
-    .btn-pink:hover {
-      filter: brightness(1.1);
-      transform: translateY(-1px);
-    }
-
-    .btn-yellow {
-      background: var(--accent-yellow);
-      color: #09070a;
-      box-shadow: 0 4px 20px rgba(255, 208, 40, 0.25);
-    }
-
-    .btn-yellow:hover {
-      filter: brightness(1.06);
-      transform: translateY(-1px);
-    }
-
-    .btn-dark {
-      background: rgba(255, 255, 255, 0.06);
-      border-color: var(--border-color);
-      color: #fff;
-    }
-
-    .btn-dark:hover {
-      background: rgba(255, 255, 255, 0.12);
-    }
-
-    .burger {
-      display: none;
-      background: rgba(255,255,255,0.06);
+    .lang-switch {
+      display: flex;
+      background: #17141d;
       border: 1px solid var(--border-color);
-      color: #fff;
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
+      border-radius: 8px;
+      padding: 2px;
     }
 
-    /* SECTION HEADERS */
-    .section {
-      padding: 80px 0;
-    }
-
-    .section-tag {
-      display: block;
+    .lang-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
       font-size: 11px;
       font-weight: 700;
-      letter-spacing: 0.14em;
+      padding: 5px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .lang-btn.active {
+      background: var(--accent-pink);
+      color: #ffffff;
+    }
+
+    .btn-nav-download {
+      background: var(--accent-pink);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 8px 16px;
+      border-radius: 8px;
       text-transform: uppercase;
-      color: var(--accent-pink);
-      margin-bottom: 12px;
+      letter-spacing: 0.03em;
+      box-shadow: 0 4px 14px var(--accent-pink-glow);
+      transition: background 0.2s, transform 0.15s;
     }
 
-    .section-title {
-      font-size: clamp(28px, 4vw, 42px);
-      font-weight: 800;
-      line-height: 1.15;
-      letter-spacing: -0.02em;
-      margin-bottom: 14px;
+    .btn-nav-download:hover {
+      background: var(--accent-pink-hover);
+      transform: translateY(-1px);
     }
 
-    .section-subtitle {
-      font-size: 15px;
-      color: var(--text-muted);
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    .text-center {
-      text-align: center;
-    }
-
-    /* HERO */
+    /* Hero Секция */
     .hero {
       padding: 64px 0 40px;
       text-align: center;
     }
 
-    .hero h1 {
-      font-size: clamp(34px, 5.5vw, 56px);
+    .eyebrow {
+      font-size: 11px;
       font-weight: 800;
-      line-height: 1.1;
-      letter-spacing: -0.03em;
-      margin-bottom: 18px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent-pink);
+      margin-bottom: 14px;
     }
 
-    .hero p {
+    .hero h1 {
+      font-size: clamp(32px, 5vw, 54px);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      max-width: 760px;
+      margin: 0 auto 18px;
+    }
+
+    .hero p.subtitle {
+      font-size: clamp(14px, 2vw, 16px);
       color: var(--text-muted);
-      font-size: 16px;
-      max-width: 620px;
+      max-width: 640px;
       margin: 0 auto 28px;
     }
 
     .hero-buttons {
       display: flex;
-      justify-content: center;
       flex-wrap: wrap;
+      justify-content: center;
       gap: 12px;
       margin-bottom: 24px;
     }
 
-    .hero-buttons .btn {
-      padding: 14px 24px;
-      font-size: 13px;
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 13px 22px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: 1px solid transparent;
     }
 
-    .hero-pills {
+    .btn-pink {
+      background: var(--accent-pink);
+      color: #ffffff;
+      box-shadow: 0 6px 20px var(--accent-pink-glow);
+    }
+
+    .btn-pink:hover {
+      background: var(--accent-pink-hover);
+      transform: translateY(-2px);
+    }
+
+    .btn-yellow {
+      background: var(--accent-yellow);
+      color: #09080b;
+    }
+
+    .btn-yellow:hover {
+      background: var(--accent-yellow-hover);
+      transform: translateY(-2px);
+    }
+
+    .btn-dark {
+      background: #16131c;
+      border-color: var(--border-color);
+      color: #fff;
+    }
+
+    .btn-dark:hover {
+      background: #201b29;
+      border-color: var(--border-pink);
+      transform: translateY(-2px);
+    }
+
+    .pills-row {
       display: flex;
-      justify-content: center;
       flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 44px;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 42px;
     }
 
     .pill {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--border-color);
-      padding: 6px 14px;
-      border-radius: 999px;
+      background: rgba(255, 42, 109, 0.08);
+      border: 1px solid rgba(255, 42, 109, 0.22);
+      color: #f3c6d4;
       font-size: 11px;
-      font-weight: 700;
-      color: var(--text-muted);
-      letter-spacing: 0.05em;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
     }
 
-    /* PHONE MOCKUP FOR REAL SCREENSHOTS */
-    .phone-frame {
-      max-width: 310px;
+    /* Превью телефона */
+    .phone-showcase {
+      max-width: 340px;
       margin: 0 auto;
-      background: #0d0b0f;
-      border: 4px solid #26212b;
-      border-radius: 38px;
-      padding: 8px;
-      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.85), 0 0 60px var(--glow-pink);
-      overflow: hidden;
+      position: relative;
     }
 
-    .app-screenshot {
+    .phone-frame {
+      background: #110f15;
+      border: 2px solid rgba(255, 42, 109, 0.25);
+      border-radius: 28px;
+      padding: 10px;
+      box-shadow: 0 25px 70px rgba(0, 0, 0, 0.8), 0 0 45px rgba(255, 42, 109, 0.18);
+    }
+
+    .phone-frame img {
       width: 100%;
-      height: auto;
-      border-radius: 30px;
+      border-radius: 20px;
       display: block;
     }
 
-    .toast-stack {
-      max-width: 360px;
-      margin: 22px auto 0;
+    .floating-notifications {
+      margin-top: 14px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
+      text-align: left;
     }
 
-    .toast {
-      background: var(--bg-card);
+    .notif-card {
+      background: #14111a;
       border: 1px solid var(--border-color);
       border-left: 3px solid var(--accent-pink);
       border-radius: 12px;
-      padding: 12px 16px;
-      text-align: left;
-      display: flex;
-      align-items: center;
-      gap: 12px;
+      padding: 12px 14px;
     }
 
-    .toast-icon {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: rgba(255, 42, 109, 0.15);
-      color: var(--accent-pink);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 13px;
-      flex-shrink: 0;
-    }
-
-    .toast h4 {
+    .notif-title {
       font-size: 13px;
       font-weight: 700;
+      color: #fff;
+      margin-bottom: 2px;
     }
 
-    .toast p {
+    .notif-desc {
       font-size: 11px;
       color: var(--text-muted);
-      margin: 0;
     }
 
-    /* KEY METRICS */
-    .metrics-grid {
+    section {
+      padding: 64px 0;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .section-header h2 {
+      font-size: clamp(26px, 4vw, 38px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .section-header p {
+      color: var(--text-muted);
+      font-size: 15px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .stats-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 14px;
       margin-top: 32px;
     }
 
-    .metric-card {
+    .stat-box {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
-      border-radius: 16px;
-      padding: 24px 16px;
+      border-radius: 14px;
+      padding: 22px 16px;
       text-align: center;
     }
 
-    .metric-card strong {
-      display: block;
-      font-size: 28px;
+    .stat-value {
+      font-size: 24px;
       font-weight: 800;
+      color: var(--accent-pink);
       margin-bottom: 4px;
     }
 
-    .metric-card span {
+    .stat-label {
       font-size: 12px;
       color: var(--text-muted);
     }
 
-    /* GRIDS */
     .grid-3 {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 16px;
-      margin-top: 36px;
+    }
+
+    .grid-5 {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 14px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
     }
 
     .card {
@@ -362,22 +399,23 @@
       border: 1px solid var(--border-color);
       border-radius: 16px;
       padding: 24px;
-      transition: border-color 0.2s ease, background 0.2s ease;
+      transition: border-color 0.25s, transform 0.25s, background 0.25s;
     }
 
     .card:hover {
       background: var(--bg-card-hover);
-      border-color: rgba(255, 255, 255, 0.16);
+      border-color: var(--border-pink);
+      transform: translateY(-3px);
     }
 
-    .card-kicker {
-      display: block;
+    .card-tag {
       font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
+      font-weight: 800;
       color: var(--accent-pink);
       text-transform: uppercase;
-      margin-bottom: 8px;
+      letter-spacing: 0.08em;
+      margin-bottom: 10px;
+      display: block;
     }
 
     .card h3 {
@@ -387,304 +425,338 @@
     }
 
     .card p {
-      font-size: 13.5px;
+      font-size: 13px;
       color: var(--text-muted);
       line-height: 1.55;
     }
 
-    /* STEPS */
-    .steps-grid {
+    .split-layout {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 14px;
-      margin-top: 36px;
-    }
-
-    .step-num {
-      font-size: 13px;
-      font-weight: 800;
-      color: var(--accent-pink);
-      margin-bottom: 10px;
-      display: block;
-    }
-
-    /* RATING SPLIT */
-    .rating-layout {
-      display: grid;
-      grid-template-columns: 1.4fr 1fr;
-      gap: 24px;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 32px;
       align-items: center;
-      margin-top: 36px;
     }
 
-    .rating-cards {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
-    }
-
-    /* LEAGUES & PLATFORM STATUS */
-    .league-icon-img {
-      width: 56px;
-      height: 56px;
-      border-radius: 14px;
+    .league-icon {
+      width: 54px;
+      height: 54px;
       object-fit: contain;
       margin-bottom: 14px;
-      background: #000;
-      padding: 4px;
+    }
+
+    .device-box {
+      margin-top: 24px;
+      background: var(--bg-card);
       border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 24px;
     }
 
-    .platform-box {
-      margin-top: 18px;
+    .device-badges {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
       flex-wrap: wrap;
-      gap: 16px;
-      text-align: left;
+      gap: 12px;
+      margin-top: 16px;
     }
 
-    .platform-badges {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .platform-badge {
+    .device-badge {
+      background: #1a1622;
+      border: 1px solid var(--border-pink);
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 600;
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border-color);
-      padding: 8px 14px;
-      border-radius: 10px;
-      font-size: 12.5px;
-      font-weight: 700;
-      color: #fff;
     }
 
-    /* MAP POOL (4 MAPS WITH EMBLEM IMAGES) */
+    /* Активный пул карт и анимация Бан/Пик */
+    .veto-controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .veto-status-text {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent-pink);
+      background: rgba(255, 42, 109, 0.12);
+      border: 1px solid rgba(255, 42, 109, 0.35);
+      padding: 6px 16px;
+      border-radius: 999px;
+    }
+
+    .btn-replay {
+      background: #1b1724;
+      border: 1px solid var(--border-color);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .btn-replay:hover {
+      border-color: var(--accent-pink);
+      background: #241e30;
+    }
+
     .maps-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 16px;
-      margin-top: 36px;
     }
 
     .map-card {
       position: relative;
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
+      height: 220px;
       border-radius: 16px;
-      padding: 18px;
+      overflow: hidden;
+      border: 2px solid var(--border-color);
+      background-size: cover;
+      background-position: center;
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: space-between;
-      gap: 14px;
-      overflow: hidden;
+      padding: 14px;
+      transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
+    .map-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(9, 8, 11, 0.3) 0%, rgba(9, 8, 11, 0.92) 100%);
+      z-index: 1;
+    }
+
+    /* Эффект клика при выборе карты */
+    .map-card.selecting {
+      transform: scale(0.95);
+      border-color: var(--accent-pink);
+      box-shadow: 0 0 28px rgba(255, 42, 109, 0.55);
+    }
+
+    /* Забаненная карта */
     .map-card.banned {
-      opacity: 0.6;
+      border-color: rgba(255, 42, 109, 0.55);
+      filter: grayscale(0.8);
+      opacity: 0.72;
     }
 
     .map-card.banned::after {
       content: "";
       position: absolute;
       top: 50%;
-      left: -15%;
-      width: 130%;
+      left: -10%;
+      width: 120%;
       height: 2px;
-      background: rgba(239, 68, 68, 0.8);
-      transform: rotate(32deg);
-      pointer-events: none;
+      background: var(--accent-pink);
+      transform: rotate(-28deg);
+      z-index: 3;
+      box-shadow: 0 0 10px var(--accent-pink);
     }
 
-    .map-card.active {
-      border-color: var(--accent-pink);
-      box-shadow: 0 0 30px rgba(255, 42, 109, 0.2);
-      background: linear-gradient(180deg, rgba(255,42,109,0.1) 0%, var(--bg-card) 100%);
+    /* Выбранная карта (Осталась одна) */
+    .map-card.picked {
+      border-color: var(--accent-green);
+      transform: scale(1.03);
+      box-shadow: 0 12px 35px rgba(16, 185, 129, 0.3);
     }
 
     .map-top {
-      width: 100%;
+      position: relative;
+      z-index: 2;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
     .map-num {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
-      color: var(--text-muted);
-    }
-
-    .map-status {
-      font-size: 10px;
-      font-weight: 800;
+      color: rgba(255, 255, 255, 0.75);
+      background: rgba(0, 0, 0, 0.6);
       padding: 3px 8px;
       border-radius: 6px;
+    }
+
+    .map-badge {
+      font-size: 10px;
+      font-weight: 800;
       text-transform: uppercase;
+      padding: 4px 9px;
+      border-radius: 6px;
+      letter-spacing: 0.05em;
+      background: rgba(255, 255, 255, 0.14);
+      color: #fff;
     }
 
-    .status-ban {
-      background: rgba(239, 68, 68, 0.12);
-      color: var(--accent-red);
-      border: 1px solid rgba(239, 68, 68, 0.3);
+    .map-card.banned .map-badge {
+      background: rgba(255, 42, 109, 0.25);
+      color: #ff75a0;
+      border: 1px solid rgba(255, 42, 109, 0.55);
     }
 
-    .status-play {
-      background: rgba(34, 197, 94, 0.14);
-      color: var(--accent-green);
-      border: 1px solid rgba(34, 197, 94, 0.35);
-    }
-
-    .map-emblem {
-      width: 96px;
-      height: 96px;
-      object-fit: contain;
-      border-radius: 12px;
+    .map-card.picked .map-badge {
+      background: rgba(16, 185, 129, 0.25);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.6);
     }
 
     .map-name {
+      position: relative;
+      z-index: 2;
       text-align: center;
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 800;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
     }
 
-    /* FAIR PLAY & PROFILE SPLIT */
-    .split-section {
+    /* Честная игра и FAQ (как на скрине CF RANKING) */
+    .fair-play-grid,
+    .faq-layout {
       display: grid;
-      grid-template-columns: 1fr 1.3fr;
+      grid-template-columns: 0.85fr 1.15fr;
       gap: 32px;
       align-items: start;
     }
 
-    .fair-list {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .fair-item h4 {
-      font-size: 16px;
-      font-weight: 700;
-      margin-bottom: 6px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .fair-item h4 span {
-      color: var(--accent-pink);
-      font-size: 13px;
-    }
-
-    .fair-item p {
-      font-size: 13.5px;
-      color: var(--text-muted);
-    }
-
-    .voice-box {
-      margin-top: 24px;
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-left: 3px solid var(--accent-green);
-      border-radius: 14px;
-      padding: 16px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    /* FAQ */
+    .fair-list,
     .faq-list {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
+    }
+
+    .fair-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 18px 20px;
+    }
+
+    .fair-item h4 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .fair-item h4 span:first-child {
+      color: var(--accent-pink);
+      margin-right: 6px;
+    }
+
+    .fair-item p {
+      font-size: 13px;
+      color: var(--text-muted);
     }
 
     .faq-item {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
-      border-radius: 14px;
+      border-radius: 12px;
       overflow: hidden;
+      transition: border-color 0.25s;
+    }
+
+    .faq-item.open {
+      border-color: var(--border-pink);
     }
 
     .faq-question {
       width: 100%;
-      background: none;
+      background: transparent;
       border: none;
       color: #fff;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 700;
       padding: 18px 20px;
       text-align: left;
-      font-size: 15px;
-      font-weight: 700;
       display: flex;
       justify-content: space-between;
       align-items: center;
       cursor: pointer;
     }
 
-    .faq-answer {
-      padding: 0 20px 18px;
-      font-size: 13.5px;
+    .faq-icon {
       color: var(--text-muted);
-      display: none;
+      transition: transform 0.25s;
+      font-size: 12px;
+    }
+
+    .faq-item.open .faq-icon {
+      transform: rotate(180deg);
+      color: var(--accent-pink);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+      padding: 0 20px;
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
     }
 
     .faq-item.open .faq-answer {
-      display: block;
+      max-height: 220px;
+      padding: 0 20px 18px;
     }
 
-    .faq-item.open .faq-arrow {
-      transform: rotate(180deg);
-    }
-
-    /* CTA BANNER */
-    .cta-box {
+    /* Нижний блок скачивания */
+    .cta-banner {
+      background: linear-gradient(180deg, #16111d 0%, #0d0b11 100%);
+      border: 1px solid var(--border-pink);
+      border-radius: 24px;
+      padding: 52px 24px;
       text-align: center;
-      padding: 64px 20px;
-      background: radial-gradient(circle at 50% 50%, rgba(255, 42, 109, 0.12) 0%, transparent 70%);
+      margin-top: 20px;
+      box-shadow: 0 20px 60px rgba(255, 42, 109, 0.1);
     }
 
-    .cta-buttons {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin: 24px 0 16px;
+    .cta-banner h2 {
+      font-size: clamp(28px, 4.5vw, 42px);
+      font-weight: 900;
+      margin-bottom: 12px;
     }
 
-    .cta-buttons .btn {
-      padding: 14px 26px;
-      font-size: 13px;
+    .cta-banner p {
+      color: var(--text-muted);
+      font-size: 15px;
+      max-width: 540px;
+      margin: 0 auto 28px;
     }
 
-    /* FOOTER */
     footer {
       border-top: 1px solid var(--border-color);
       padding: 48px 0 32px;
-      font-size: 13px;
-      color: var(--text-muted);
+      margin-top: 40px;
     }
 
-    .footer-top {
+    .footer-grid {
       display: grid;
-      grid-template-columns: 1.5fr 1fr 1fr;
+      grid-template-columns: 1.4fr 1fr 1fr;
       gap: 32px;
       margin-bottom: 36px;
     }
 
-    .footer-col h5 {
-      color: #fff;
+    .footer-col h4 {
       font-size: 11px;
+      font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.08em;
+      color: var(--accent-pink);
       margin-bottom: 14px;
     }
 
@@ -695,7 +767,13 @@
       gap: 10px;
     }
 
-    .footer-col a:hover {
+    .footer-col ul a {
+      font-size: 13px;
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+
+    .footer-col ul a:hover {
       color: #fff;
     }
 
@@ -703,529 +781,871 @@
       border-top: 1px solid var(--border-color);
       padding-top: 20px;
       display: flex;
-      justify-content: space-between;
       flex-wrap: wrap;
+      justify-content: space-between;
       gap: 12px;
       font-size: 12px;
+      color: var(--text-dim);
     }
 
-    /* RESPONSIVE */
     @media (max-width: 960px) {
       .nav-links { display: none; }
-      .burger { display: flex; }
-      .metrics-grid, .maps-grid { grid-template-columns: repeat(2, 1fr); }
-      .grid-3, .steps-grid { grid-template-columns: 1fr; }
-      .rating-layout, .split-section, .footer-top { grid-template-columns: 1fr; }
+      .grid-5 { grid-template-columns: repeat(2, 1fr); }
+      .split-layout, .fair-play-grid, .faq-layout { grid-template-columns: 1fr; }
     }
 
-    @media (max-width: 540px) {
-      .rating-cards { grid-template-columns: 1fr; }
-      .navbar .btn-pink { display: none; }
+    @media (max-width: 680px) {
+      .stats-grid, .grid-3, .grid-2, .grid-5 { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+      .hero-buttons .btn { width: 100%; }
+      .maps-grid { grid-template-columns: repeat(2, 1fr); }
+      .map-card { height: 170px; }
     }
   </style>
 </head>
 <body>
 
   <header>
-    <div class="navbar">
-      <a href="#" class="logo">
-        <img src="logo.png" alt="CyberFaceit" class="logo-img">
+    <div class="container nav-inner">
+      <a href="#" class="brand">
+        <img src="logo.png" alt="CyberFaceit Logo" />
         <span>CyberFaceit</span>
       </a>
 
-      <nav class="nav-links" id="navLinks">
-        <a href="#features">Возможности</a>
-        <a href="#how-it-works">Как это работает</a>
-        <a href="#rating">Рейтинг</a>
-        <a href="#fair-play">Честная игра</a>
-        <a href="#faq">Вопросы</a>
+      <nav class="nav-links">
+        <a href="#features" data-i18n="nav_features">Возможности</a>
+        <a href="#how-it-works" data-i18n="nav_how">Как это работает</a>
+        <a href="#rating" data-i18n="nav_rating">Рейтинг</a>
+        <a href="#fair-play" data-i18n="nav_fair">Честная игра</a>
+        <a href="#faq" data-i18n="nav_faq">Вопросы</a>
       </nav>
 
       <div class="nav-actions">
-        <a href="https://cyberfaceitcs.vercel.app" target="_blank" class="btn btn-pink">Играть в браузере</a>
-        <a href="https://www.rustore.ru/catalog/app/com.cyberfaceit.cs" target="_blank" class="btn btn-dark">Скачать</a>
-        <a href="https://www.rustore.ru/catalog/app/com.cyberfaceit.cs" target="_blank" class="btn btn-dark">Скачать через Telegram</a>
-        <button class="burger" id="burgerBtn" aria-label="Меню">☰</button>
+        <div class="lang-switch">
+          <button type="button" class="lang-btn active" id="btn-ru" onclick="setLanguage('ru')">RU</button>
+          <button type="button" class="lang-btn" id="btn-en" onclick="setLanguage('en')">EN</button>
+        </div>
+        <a href="#download" class="btn-nav-download" data-i18n="nav_download">Скачать</a>
       </div>
     </div>
   </header>
 
-  <section class="hero">
-    <div class="container">
-      <span class="section-tag">COUNTER FLAME • МАТЧИ 5 НА 5 И 2 НА 2</span>
-      <h1>Матчмейкинг,<br>где решает скилл</h1>
-      <p>Собирайте пати, ищите соперников по рейтингу, баньте карты и играйте 5 на 5 или 2 на 2 с командным голосом. Победы, поражения и личная статистика меняют ELO — случайных тиммейтов из публичных лобби здесь нет.</p>
+  <main>
+    <section class="hero reveal">
+      <div class="container">
+        <div class="eyebrow" data-i18n="hero_eyebrow">COUNTER FLAME • МАТЧИ 5 НА 5 И 2 НА 2</div>
+        <h1 data-i18n="hero_title">Матчмейкинг, где решает скилл</h1>
+        <p class="subtitle" data-i18n="hero_subtitle">
+          Собирайте пати, ищите соперников по рейтингу, баньте карты и играйте 5 на 5 или 2 на 2 с командным голосом. Победы, поражения и личная статистика меняют ELO — случайных тиммейтов из публичных лобби здесь нет.
+        </p>
 
-      <div class="hero-buttons">
-        <a href="https://www.rustore.ru/catalog/app/com.cyberfaceit.cs" target="_blank" class="btn btn-yellow">⬇ Скачать в RuStore</a>
-        <a href="https://t.me/cyberfaceitcs_apk" target="_blank" class="btn btn-dark">⬇ Скачать через Telegram</a>
-        <a href="https://cyberfaceitcs.vercel.app" target="_blank" class="btn btn-dark">Играть в браузере</a>
+        <div class="hero-buttons">
+          <a href="#download" class="btn btn-yellow" data-i18n="btn_rustore">▶ СКАЧАТЬ В RUSTORE</a>
+          <a href="#download" class="btn btn-pink" data-i18n="btn_telegram">✈ СКАЧАТЬ ЧЕРЕЗ TELEGRAM</a>
+          <a href="#download" class="btn btn-dark" data-i18n="btn_browser">🌐 ИГРАТЬ В БРАУЗЕРЕ</a>
+        </div>
+
+        <div class="pills-row">
+          <span class="pill" data-i18n="pill_1">3 ЛИГИ</span>
+          <span class="pill" data-i18n="pill_2">4 КАРТЫ В ПУЛЕ</span>
+          <span class="pill" data-i18n="pill_3">10 УРОВНЕЙ</span>
+          <span class="pill" data-i18n="pill_4">PC / MOBILE СТАТУСЫ</span>
+        </div>
+
+        <div class="phone-showcase">
+          <div class="phone-frame">
+            <img src="screen-play.png" alt="CyberFaceit App Play Screen" />
+          </div>
+          <div class="floating-notifications">
+            <div class="notif-card">
+              <div class="notif-title" data-i18n="notif_1_title">Матч найден</div>
+              <div class="notif-desc" data-i18n="notif_1_desc">Все игроки подтвердили участие — переходим к бану карт</div>
+            </div>
+            <div class="notif-card">
+              <div class="notif-title" data-i18n="notif_2_title">Ваш ход — забаньте карту</div>
+              <div class="notif-desc" data-i18n="notif_2_desc">Осталось 2 карты • 30 секунд на ход</div>
+            </div>
+          </div>
+        </div>
       </div>
+    </section>
 
-      <div class="hero-pills">
-        <span class="pill">3 ЛИГИ</span>
-        <span class="pill">4 КАРТЫ В ПУЛЕ</span>
-        <span class="pill">10 УРОВНЕЙ</span>
-        <span class="pill">🖥️ PC / 📱 MOBILE СТАТУСЫ</span>
+    <section class="reveal">
+      <div class="container">
+        <div class="section-header">
+          <h2 data-i18n="stats_title">Всё, что нужно для серьёзной катки</h2>
+          <p data-i18n="stats_sub">Платформа берёт на себя подбор, бан карт, лобби и подсчёт результата. Вам остаётся играть.</p>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-box">
+            <div class="stat-value">5×5 / 2×2</div>
+            <div class="stat-label" data-i18n="stat_1">Форматы матчей</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-value">4</div>
+            <div class="stat-label" data-i18n="stat_2">Карты в пуле</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-value">1–10</div>
+            <div class="stat-label" data-i18n="stat_3">Уровней рейтинга</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-value">3</div>
+            <div class="stat-label" data-i18n="stat_4">Лиги</div>
+          </div>
+        </div>
       </div>
+    </section>
 
-      <div class="phone-frame">
-        <img src="screen-play.png" alt="Интерфейс матчмейкинга CyberFaceit" class="app-screenshot">
+    <section id="features" class="reveal">
+      <div class="container">
+        <div class="section-header">
+          <div class="eyebrow" data-i18n="feat_eyebrow">ВОЗМОЖНОСТИ</div>
+          <h2 data-i18n="feat_title">Турнирные правила в мобильном приложении</h2>
+          <p data-i18n="feat_sub">Каждый матч проходит один и тот же путь: подбор, бан карт, лобби, результат, рейтинг. Никаких договорённостей в чате.</p>
+        </div>
+        <div class="grid-3">
+          <div class="card">
+            <span class="card-tag">ELO</span>
+            <h3 data-i18n="f1_t">Подбор по ELO</h3>
+            <p data-i18n="f1_d">Очередь ищет соперников близкого рейтинга и расширяет диапазон, пока вы ждёте. Команды делятся так, чтобы средний рейтинг сторон был как можно ближе.</p>
+          </div>
+          <div class="card">
+            <span class="card-tag">PARTY</span>
+            <h3 data-i18n="f2_t">Пати с друзьями</h3>
+            <p data-i18n="f2_d">Зовите друзей по статик ID, собирайте состав до пяти человек и заходите в очередь вместе. Пати не разбивается при формировании команд.</p>
+          </div>
+          <div class="card">
+            <span class="card-tag">VETO</span>
+            <h3 data-i18n="f3_t">Бан карт капитанами</h3>
+            <p data-i18n="f3_d">Четыре карты, три бана по очереди — остаётся одна. Ход длится 30 секунд: по таймауту карта банится автоматически, так что этап никогда не зависает.</p>
+          </div>
+          <div class="card">
+            <span class="card-tag">VOICE</span>
+            <h3 data-i18n="f4_t">Командный голос</h3>
+            <p data-i18n="f4_d">Голосовой чат встроен в приложение: отдельная комната на пати и на каждую команду в матче. Микшер громкости, мут в один тап, сторонние приложения не нужны.</p>
+          </div>
+          <div class="card">
+            <span class="card-tag">SEASON</span>
+            <h3 data-i18n="f5_t">Лидерборд и сезоны</h3>
+            <p data-i18n="f5_d">Таблица лидеров по каждой лиге и сезону, ранг в профиле, история матчей с K/D/A и дельтой рейтинга за каждую игру.</p>
+          </div>
+          <div class="card">
+            <span class="card-tag">SHOP</span>
+            <h3 data-i18n="f6_t">Магазин и косметика</h3>
+            <p data-i18n="f6_d">Рамки, баннеры, флаги, эмодзи и цвет ника за Cyber Coin. Чёрный рынок открывается по расписанию со скидками 40–70%.</p>
+          </div>
+        </div>
       </div>
+    </section>
 
-      <div class="toast-stack">
-        <div class="toast">
-          <div class="toast-icon">🔍</div>
+    <section id="how-it-works" class="reveal">
+      <div class="container">
+        <div class="section-header">
+          <div class="eyebrow" data-i18n="how_eyebrow">КАК ЭТО РАБОТАЕТ</div>
+          <h2 data-i18n="how_title">От очереди до рейтинга — пять шагов</h2>
+          <p data-i18n="how_sub">Сервер ведёт матч сам: у каждой фазы есть таймер и правило выхода.</p>
+        </div>
+        <div class="grid-5">
+          <div class="card">
+            <span class="card-tag">01</span>
+            <h3 data-i18n="s1_t">Очередь</h3>
+            <p data-i18n="s1_d">Выбираете лигу и жмёте «Найти матч». Приложение показывает, сколько людей в игре и в поиске прямо сейчас.</p>
+          </div>
+          <div class="card">
+            <span class="card-tag">02</span>
+            <h3 data-i18n="s2_t">Подтверждение</h3>
+            <p data-i18n="s2_d">Матч собран — все игроки подтверждают участие за 30 секунд. Кто-то отказался: остальные возвращаются в очередь без потери места.</p>
+          </div>
+          <div class="card">
+            <span class="card-tag">03</span>
+            <h3 data-i18n="s3_t">Бан карт</h3>
+            <p data-i18n="s3_d">Капитаны по очереди убирают карты, пока не останется одна. Капитана выбирает жребий: чаще им становится самый опытный игрок команды.</p>
+          </div>
+          <div class="card">
+            <span class="card-tag">04</span>
+            <h3 data-i18n="s4_t">Лобби</h3>
+            <p data-i18n="s4_d">Сервер случайно выбирает хоста из двух капитанов и раскрывает его игровой ID из CounterFlame. Копируете, заходите в лобби, играете.</p>
+          </div>
+          <div class="card">
+            <span class="card-tag">05</span>
+            <h3 data-i18n="s5_t">Результат</h3>
+            <p data-i18n="s5_d">Любой из участников загружает скриншот таблицы. Счёт распознаётся автоматически, команды голосуют, модератор подтверждает — и ELO пересчитывается.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="rating" class="reveal">
+      <div class="container">
+        <div class="section-header">
+          <div class="eyebrow" data-i18n="rat_eyebrow">РЕЙТИНГ</div>
+          <h2 data-i18n="rat_title">Понятная система: ELO, уровни, сезоны</h2>
+          <p data-i18n="rat_sub">Никаких скрытых коэффициентов. Начисление очков зависит от исхода матча и вашего личного вклада в игру.</p>
+        </div>
+        <div class="split-layout">
+          <div class="grid-2">
+            <div class="card">
+              <h3 data-i18n="r1_t">Старт с 0 ELO</h3>
+              <p data-i18n="r1_d">Новый игрок и новый сезон начинаются с 0 очков и первого уровня. Ниже нуля рейтинг не опускается.</p>
+            </div>
+            <div class="card">
+              <h3 data-i18n="r2_t">ELO по статистике</h3>
+              <p data-i18n="r2_d">Победа +25 / поражение −18, плюс бонус −6…+12 за (K+Д), помощь, урон за раунд и %ГЛ.</p>
+            </div>
+            <div class="card">
+              <h3 data-i18n="r3_t">Десять уровней</h3>
+              <p data-i18n="r3_d">Уровень пересчитывается после каждого матча и может падать — он отражает текущий рейтинг, а не сумму сыгранного.</p>
+            </div>
+            <div class="card">
+              <h3 data-i18n="r4_t">Сезоны и ладдеры</h3>
+              <p data-i18n="r4_d">Сезон обнуляет статистику, но не удаляет историю — прошлые сезоны остаются в профиле. Внутри месяца работают ладдеры по группам уровней.</p>
+            </div>
+          </div>
+
+          <div class="phone-showcase">
+            <div class="phone-frame">
+              <img src="screen-top.png" alt="CyberFaceit Leaderboard" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="reveal">
+      <div class="container">
+        <div class="section-header">
+          <div class="eyebrow" data-i18n="lg_eyebrow">ЛИГИ И УСТРОЙСТВА</div>
+          <h2 data-i18n="lg_title">Три лиги, свой рейтинг в каждой</h2>
+          <p data-i18n="lg_sub">Статистика считается отдельно по каждой лиге и сезону — переход в другую лигу не переносит ELO.</p>
+        </div>
+        <div class="grid-3">
+          <div class="card">
+            <img src="league-default.png" alt="Default League" class="league-icon" />
+            <h3>DEFAULT</h3>
+            <p data-i18n="lg1_d">Открытый рейтинговый матчмейкинг. Выдаётся всем игрокам сразу после регистрации.</p>
+          </div>
+          <div class="card">
+            <img src="league-qual.png" alt="Qual League" class="league-icon" />
+            <h3>QUAL</h3>
+            <p data-i18n="lg2_d">Покупается в магазине или открывается бесплатно за топ-30 месячного ладдера 8–10 уровня.</p>
+          </div>
+          <div class="card">
+            <img src="league-pro.png" alt="Pro League" class="league-icon" />
+            <h3>PRO</h3>
+            <p data-i18n="lg3_d">Закрытая элитная лига — доступ выдаётся вручную.</p>
+          </div>
+        </div>
+
+        <div class="device-box">
+          <span class="card-tag" data-i18n="dev_tag">СТАТУС ИГРОКА</span>
+          <h3 data-i18n="dev_title">Значок PC или Телефон в профиле</h3>
+          <p style="font-size: 13px; color: var(--text-muted); margin-top: 6px;" data-i18n="dev_sub">
+            В приложении игрок сам выбирает платформу, с которой играет — в лобби и профиле рядом с ником отображается значок PC или Телефона.
+          </p>
+          <div class="device-badges">
+            <div class="device-badge" data-i18n="dev_pc">🖥️ PC — Играет с компьютера</div>
+            <div class="device-badge" data-i18n="dev_mob">📱 Телефон — Играет с мобильного</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="map-pool" class="reveal">
+      <div class="container">
+        <div class="section-header">
+          <div class="eyebrow" data-i18n="map_eyebrow">КАРТЫ</div>
+          <h2 data-i18n="map_title">Активный пул карт</h2>
+          <p data-i18n="map_sub">Четыре карты — после трёх банов всегда остаётся ровно одна. Играть только на любимой карте не выйдет.</p>
+        </div>
+
+        <div class="veto-controls">
+          <span class="veto-status-text" id="veto-status" data-i18n="veto_wait">Ожидание начала вето...</span>
+          <button type="button" class="btn-replay" onclick="startVetoAnimation()" data-i18n="veto_replay">↻ Повторить бан-пик</button>
+        </div>
+
+        <div class="maps-grid">
+          <div class="map-card" id="map-0" style="background-image: url('map-dust2.png');">
+            <div class="map-top">
+              <span class="map-num">01</span>
+              <span class="map-badge" id="badge-0">В ПУЛЕ</span>
+            </div>
+            <div class="map-name">DUST 2</div>
+          </div>
+
+          <div class="map-card" id="map-1" style="background-image: url('map-vertigo.png');">
+            <div class="map-top">
+              <span class="map-num">02</span>
+              <span class="map-badge" id="badge-1">В ПУЛЕ</span>
+            </div>
+            <div class="map-name">VERTIGO</div>
+          </div>
+
+          <div class="map-card" id="map-2" style="background-image: url('map-inferno.png');">
+            <div class="map-top">
+              <span class="map-num">03</span>
+              <span class="map-badge" id="badge-2">В ПУЛЕ</span>
+            </div>
+            <div class="map-name">INFERNO</div>
+          </div>
+
+          <div class="map-card" id="map-3" style="background-image: url('map-mirage.png');">
+            <div class="map-top">
+              <span class="map-num">04</span>
+              <span class="map-badge" id="badge-3">В ПУЛЕ</span>
+            </div>
+            <div class="map-name">MIRAGE</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="fair-play" class="reveal">
+      <div class="container">
+        <div class="fair-play-grid">
           <div>
-            <h4>Матч найден</h4>
-            <p>Все игроки подтвердили участие • переходим к бану карт</p>
+            <div class="eyebrow" data-i18n="fp_eyebrow">ЧЕСТНАЯ ИГРА</div>
+            <h2 style="font-size: clamp(26px, 4vw, 36px); font-weight: 800; margin-bottom: 14px;" data-i18n="fp_title">
+              Результат нельзя подделать в одиночку
+            </h2>
+            <p style="color: var(--text-muted); font-size: 14px;" data-i18n="fp_sub">
+              Матч закрывается только тогда, когда его подтвердили обе стороны и живой модератор.
+            </p>
+          </div>
+          <div class="fair-list">
+            <div class="fair-item">
+              <h4><span>01</span> <span data-i18n="fp1_t">Скриншот вместо честного слова</span></h4>
+              <p data-i18n="fp1_d">Итог матча подтверждается скриншотом таблицы. Один и тот же файл нельзя переиспользовать в другом матче — проверка идёт по хешу.</p>
+            </div>
+            <div class="fair-item">
+              <h4><span>02</span> <span data-i18n="fp2_t">Голосование обеих команд</span></h4>
+              <p data-i18n="fp2_d">Скриншот уходит на голосование всем участникам матча. Пока стороны не согласятся, матч не двигается дальше.</p>
+            </div>
+            <div class="fair-item">
+              <h4><span>03</span> <span data-i18n="fp3_t">Ручная модерация</span></h4>
+              <p data-i18n="fp3_d">Финальные K/D/A и счёт вносит модератор. Только после этого начисляется рейтинг — отменить уже проверенный матч голосованием нельзя.</p>
+            </div>
+            <div class="fair-item">
+              <h4><span>04</span> <span data-i18n="fp4_t">Жалобы и блокировки</span></h4>
+              <p data-i18n="fp4_d">На игрока можно пожаловаться прямо из матча: читы, токсичность, руин, выход из игры.</p>
+            </div>
           </div>
         </div>
-        <div class="toast">
-          <div class="toast-icon">🚫</div>
+      </div>
+    </section>
+
+    <section class="reveal">
+      <div class="container">
+        <div class="split-layout">
           <div>
-            <h4>Ваш ход — забаньте карту</h4>
-            <p>Осталось 2 карты • 30 секунд на ход</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" style="padding-top: 30px;">
-    <div class="container text-center">
-      <h2 class="section-title">Всё, что нужно для серьёзной катки</h2>
-      <p class="section-subtitle">Платформа берёт на себя подбор, бан карт, лобби и подсчёт результата. Вам остаётся играть.</p>
-
-      <div class="metrics-grid">
-        <div class="metric-card">
-          <strong>5×5 / 2×2</strong>
-          <span>Форматы матчей</span>
-        </div>
-        <div class="metric-card">
-          <strong>4</strong>
-          <span>Карты в пуле</span>
-        </div>
-        <div class="metric-card">
-          <strong>1–10</strong>
-          <span>Уровней рейтинга</span>
-        </div>
-        <div class="metric-card">
-          <strong>3</strong>
-          <span>Лиги</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="features">
-    <div class="container text-center">
-      <span class="section-tag">ВОЗМОЖНОСТИ</span>
-      <h2 class="section-title">Турнирные правила в мобильном приложении</h2>
-      <p class="section-subtitle">Каждый матч проходит один и тот же путь: подбор, бан карт, лобби, результат, рейтинг. Никаких договорённостей в чате.</p>
-
-      <div class="grid-3" style="text-align:left;">
-        <div class="card">
-          <span class="card-kicker">ELO</span>
-          <h3>Подбор по ELO</h3>
-          <p>Очередь ищет соперников близкого рейтинга и расширяет диапазон, пока вы ждёте. Команды делятся так, чтобы средний рейтинг сторон был как можно ближе.</p>
-        </div>
-        <div class="card">
-          <span class="card-kicker">PARTY</span>
-          <h3>Пати с друзьями</h3>
-          <p>Зовите друзей по статик-ID, собирайте состав до пяти человек и заходите в очередь вместе. Пати не разбивается при формировании команд.</p>
-        </div>
-        <div class="card">
-          <span class="card-kicker">VETO</span>
-          <h3>Бан карт капитанами</h3>
-          <p>Четыре карты, три бана по очереди — остаётся одна. Ход длится 30 секунд, по таймауту карта банится автоматически, так что этап никогда не зависает.</p>
-        </div>
-        <div class="card">
-          <span class="card-kicker">VOICE</span>
-          <h3>Командный голос</h3>
-          <p>Голосовой чат встроен в приложение: отдельная комната на пати и на каждую команду в матче. Микшер громкости, мут в один тап, сторонние приложения не нужны.</p>
-        </div>
-        <div class="card">
-          <span class="card-kicker">SEASON</span>
-          <h3>Лидерборд и сезоны</h3>
-          <p>Таблица лидеров по каждой лиге и сезону, ранг в профиле, история матчей с K/D/A и дельтой рейтинга за каждую игру.</p>
-        </div>
-        <div class="card">
-          <span class="card-kicker">SHOP</span>
-          <h3>Магазин и косметика</h3>
-          <p>Рамки, баннеры, флаги, эмодзи и цвет ника за Cyber Coin. Чёрный рынок открывается по расписанию со скидками 40–70%.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="how-it-works">
-    <div class="container text-center">
-      <span class="section-tag">КАК ЭТО РАБОТАЕТ</span>
-      <h2 class="section-title">От очереди до рейтинга — пять шагов</h2>
-      <p class="section-subtitle">Сервер ведёт матч сам: у каждой фазы есть таймер и правило выхода.</p>
-
-      <div class="steps-grid" style="text-align:left;">
-        <div class="card">
-          <span class="step-num">01</span>
-          <h3>Очередь</h3>
-          <p>Выбираете лигу и жмёте «Найти матч». Приложение показывает, сколько людей в игре и в поиске прямо сейчас.</p>
-        </div>
-        <div class="card">
-          <span class="step-num">02</span>
-          <h3>Подтверждение</h3>
-          <p>Матч собран — все игроки подтверждают участие за 30 секунд. Кто-то отказался: остальные возвращаются в очередь без потери места.</p>
-        </div>
-        <div class="card">
-          <span class="step-num">03</span>
-          <h3>Бан карт</h3>
-          <p>Капитаны по очереди убирают карты, пока не останется одна. Капитана выбирает жребий: чаще им становится самый опытный игрок команды, а в пати из 3+ — её лидер.</p>
-        </div>
-        <div class="card">
-          <span class="step-num">04</span>
-          <h3>Лобби</h3>
-          <p>Сервер случайно выбирает хоста из двух капитанов и раскрывает его игровой ID из CounterFlame. Копируете, заходите в лобби, играете.</p>
-        </div>
-        <div class="card">
-          <span class="step-num">05</span>
-          <h3>Результат</h3>
-          <p>Любой из участников загружает скриншот таблицы. Счёт распознаётся автоматически, команды голосуют, модератор подтверждает — и ELO пересчитывается.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="rating">
-    <div class="container text-center">
-      <span class="section-tag">РЕЙТИНГ</span>
-      <h2 class="section-title">Понятная система: ELO, уровни, сезоны</h2>
-      <p class="section-subtitle">Никаких скрытых коэффициентов. Начисление очков зависит от исхода матча и вашего личного вклада в игру.</p>
-
-      <div class="rating-layout" style="text-align:left;">
-        <div class="rating-cards">
-          <div class="card">
-            <h3>Старт с 0 ELO</h3>
-            <p>Новый игрок и новый сезон начинаются с 0 очков и первого уровня. Ниже нуля рейтинг не опускается.</p>
-          </div>
-          <div class="card">
-            <h3>ELO по статистике</h3>
-            <p>Победа +25 / поражение −18, плюс бонус −6…+12 за (К−Д), помощь, урон за раунд и %ГЛ.</p>
-          </div>
-          <div class="card">
-            <h3>Десять уровней</h3>
-            <p>Уровень пересчитывается после каждого матча и может падать — он отражает текущий рейтинг, а не сумму сыгранного.</p>
-          </div>
-          <div class="card">
-            <h3>Сезоны и ладдеры</h3>
-            <p>Сезон обнуляет статистику, но не удаляет историю — прошлые сезоны остаются в профиле. Внутри месяца работают ладдеры по группам уровней: они не влияют на ELO и не делят матчмейкинг.</p>
-          </div>
-        </div>
-
-        <div class="phone-frame">
-          <img src="screen-top.png" alt="Лидерборд CyberFaceit" class="app-screenshot">
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container text-center">
-      <span class="section-tag">ЛИГИ И УСТРОЙСТВА</span>
-      <h2 class="section-title">Три лиги, свой рейтинг в каждой</h2>
-      <p class="section-subtitle">Статистика считается отдельно по каждой лиге и сезону — переход в другую лигу не переносит ELO.</p>
-
-      <div class="grid-3" style="text-align:left;">
-        <div class="card">
-          <img src="league-default.png" alt="Лига Default" class="league-icon-img">
-          <h3>DEFAULT</h3>
-          <p>Открытый рейтинговый матчмейкинг. Выдаётся всем игрокам сразу после регистрации.</p>
-        </div>
-
-        <div class="card">
-          <img src="league-qual.png" alt="Лига Qual" class="league-icon-img">
-          <h3>QUAL</h3>
-          <p>Покупается в магазине или открывается бесплатно за топ-30 месячного ладдера 8–10 уровня. Держится, пока выполняете норматив по матчам и K/D.</p>
-        </div>
-
-        <div class="card">
-          <img src="league-pro.png" alt="Лига Pro" class="league-icon-img">
-          <h3>PRO</h3>
-          <p>Закрытая элитная лига — доступ выдаётся вручную.</p>
-        </div>
-      </div>
-
-      <div class="card platform-box">
-        <div>
-          <span class="card-kicker">СТАТУС ИГРОКА</span>
-          <h3>Значок PC или Телефон в профиле</h3>
-          <p>В приложении игрок сам выбирает платформу, с которой играет — в лобби и профиле рядом с ником отображается значок PC или Телефона.</p>
-        </div>
-        <div class="platform-badges">
-          <span class="platform-badge">🖥️ PC — Играет с компьютера</span>
-          <span class="platform-badge">📱 Телефон — Играет с мобильного</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container text-center">
-      <span class="section-tag">КАРТЫ</span>
-      <h2 class="section-title">Активный пул карт</h2>
-      <p class="section-subtitle">Четыре карты — после трёх банов всегда остаётся ровно одна. Играть только на любимой карте не выйдет.</p>
-
-      <div class="maps-grid">
-        <div class="map-card banned">
-          <div class="map-top">
-            <span class="map-num">01</span>
-            <span class="map-status status-ban">БАН</span>
-          </div>
-          <img src="map-dust2.png" alt="Dust 2" class="map-emblem">
-          <div class="map-name">DUST 2</div>
-        </div>
-
-        <div class="map-card banned">
-          <div class="map-top">
-            <span class="map-num">02</span>
-            <span class="map-status status-ban">БАН</span>
-          </div>
-          <img src="map-vertigo.png" alt="Vertigo" class="map-emblem">
-          <div class="map-name">VERTIGO</div>
-        </div>
-
-        <div class="map-card active">
-          <div class="map-top">
-            <span class="map-num">03</span>
-            <span class="map-status status-play">ИГРАЕМ</span>
-          </div>
-          <img src="map-inferno.png" alt="Inferno" class="map-emblem">
-          <div class="map-name">INFERNO</div>
-        </div>
-
-        <div class="map-card banned">
-          <div class="map-top">
-            <span class="map-num">04</span>
-            <span class="map-status status-ban">БАН</span>
-          </div>
-          <img src="map-mirage.png" alt="Mirage" class="map-emblem">
-          <div class="map-name">MIRAGE</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="fair-play">
-    <div class="container">
-      <div class="split-section">
-        <div>
-          <span class="section-tag">ЧЕСТНАЯ ИГРА</span>
-          <h2 class="section-title">Результат нельзя подделать в одиночку</h2>
-          <p class="section-subtitle" style="margin:0;">Матч закрывается только тогда, когда его подтвердили обе стороны и живой модератор.</p>
-        </div>
-
-        <div class="fair-list">
-          <div class="fair-item">
-            <h4><span>01</span> Скриншот вместо честного слова</h4>
-            <p>Итог матча подтверждается скриншотом таблицы. Один и тот же файл нельзя переиспользовать в другом матче — проверка идёт по хешу.</p>
-          </div>
-          <div class="fair-item">
-            <h4><span>02</span> Голосование обеих команд</h4>
-            <p>Скриншот уходит на голосование всем участникам матча. Пока стороны не согласятся, матч не двигается дальше.</p>
-          </div>
-          <div class="fair-item">
-            <h4><span>03</span> Ручная модерация</h4>
-            <p>Финальные K/D/A и счёт вносит модератор. Только после этого начисляется рейтинг — отменить уже проверенный матч голосованием нельзя.</p>
-          </div>
-          <div class="fair-item">
-            <h4><span>04</span> Жалобы и блокировки</h4>
-            <p>На игрока можно пожаловаться прямо из матча: читы, токсичность, руин, выход из игры. Аккаунт под подозрением уходит на проверку и теряет доступ к матчам.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="faq">
-    <div class="container">
-      <div class="split-section" style="margin-bottom: 64px; align-items: center;">
-        <div>
-          <span class="section-tag">ПРОФИЛЬ И МАГАЗИН</span>
-          <h2 class="section-title">Профиль, который видно</h2>
-          <p class="section-subtitle" style="margin:0;">Рамка, баннер, флаг региона, статус устройства (PC или Телефон), эмодзи и цвет ника — всё это видно соперникам в лобби и в таблице лидеров.</p>
-
-          <div class="voice-box">
-            <span style="color:var(--accent-green); font-size:18px;">🎙️</span>
-            <div>
-              <strong style="font-size:13px; display:block;">Голос команды подключён</strong>
-              <span style="font-size:11px; color:var(--text-muted);">Только своя команда — соперник вас не слышит</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="phone-frame">
-          <img src="screen-shop.png" alt="Магазин и профиль CyberFaceit" class="app-screenshot">
-        </div>
-      </div>
-
-      <div class="split-section">
-        <div>
-          <span class="section-tag">ВОПРОСЫ</span>
-          <h2 class="section-title">Коротко о главном</h2>
-        </div>
-
-        <div class="faq-list">
-          <div class="faq-item open">
-            <button class="faq-question">
-              <span>CyberFaceit — это отдельная игра?</span>
-              <span class="faq-arrow">⌃</span>
-            </button>
-            <div class="faq-answer">
-              Нет. Играете вы в самом CounterFlame, а приложение отвечает за подбор соперников, бан карт, голосовой чат и рейтинг. Матч проходит в обычном лобби CounterFlame, хоста назначает сервер.
+            <div class="eyebrow" data-i18n="sh_eyebrow">ПРОФИЛЬ И МАГАЗИН</div>
+            <h2 style="font-size: clamp(26px, 4vw, 36px); font-weight: 800; margin-bottom: 14px;" data-i18n="sh_title">
+              Профиль, который видно
+            </h2>
+            <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;" data-i18n="sh_sub">
+              Рамка, баннер, флаг региона, эмодзи и цвет ника — всё это видно соперникам в лобби и в таблице лидеров.
+            </p>
+            <div class="notif-card" style="max-width: 380px; border-left-color: var(--accent-green);">
+              <div class="notif-title" data-i18n="sh_voice_t">🎙️ Голос команды подключён</div>
+              <div class="notif-desc" data-i18n="sh_voice_d">Только своя команда — соперник вас не слышит</div>
             </div>
           </div>
 
-          <div class="faq-item">
-            <button class="faq-question">
-              <span>Нужен ли аккаунт CounterFlame?</span>
-              <span class="faq-arrow">⌄</span>
-            </button>
-            <div class="faq-answer">
-              Да, при регистрации указывается ваш игровой ID из CounterFlame — по нему соперники находят лобби, а платформа связывает результаты с профилем.
-            </div>
-          </div>
-
-          <div class="faq-item">
-            <button class="faq-question">
-              <span>Сколько стоит?</span>
-              <span class="faq-arrow">⌄</span>
-            </button>
-            <div class="faq-answer">
-              Матчмейкинг, пати, голосовой чат, рейтинг и лидерборд бесплатны. Платные — только косметика, премиум-подписка и лига QUAL, которую вдобавок можно получить бесплатно за топ месячного ладдера.
-            </div>
-          </div>
-
-          <div class="faq-item">
-            <button class="faq-question">
-              <span>Что будет, если соперник выйдет из матча?</span>
-              <span class="faq-arrow">⌄</span>
-            </button>
-            <div class="faq-answer">
-              Матч можно отменить голосованием: большинство голосов — и он закрывается без изменения рейтинга. Если результат так и не подтвердили, матч автоматически отменяется через два часа. На бросившего игрока подаётся жалоба.
-            </div>
-          </div>
-
-          <div class="faq-item">
-            <button class="faq-question">
-              <span>Можно ли играть с друзьями?</span>
-              <span class="faq-arrow">⌄</span>
-            </button>
-            <div class="faq-answer">
-              Да. Добавляйте друзей по статик-ID, собирайте пати для 5 на 5 или 2 на 2 — очередь ищет соперников на всю группу, а голосовая комната создаётся автоматически.
-            </div>
-          </div>
-
-          <div class="faq-item">
-            <button class="faq-question">
-              <span>На каких устройствах работает?</span>
-              <span class="faq-arrow">⌄</span>
-            </button>
-            <div class="faq-answer">
-              Приложение доступно для Android в RuStore. С компьютера или iOS можно играть без установки — в веб-версии в браузере. В профиле можно указать, с какого устройства вы играете (PC или Телефон), чтобы это отображалось в матче.
+          <div class="phone-showcase">
+            <div class="phone-frame">
+              <img src="screen-shop.png" alt="CyberFaceit Shop" />
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="cta-box">
-    <div class="container">
-      <h2 class="section-title">Соберите свою пятёрку</h2>
-      <p class="section-subtitle">CyberFaceit уже доступен для Android в RuStore и прямо в браузере на любом устройстве.</p>
+    <section id="faq" class="reveal">
+      <div class="container">
+        <div class="faq-layout">
+          <div>
+            <div class="eyebrow" data-i18n="faq_eyebrow">ВОПРОСЫ</div>
+            <h2 style="font-size: clamp(28px, 4vw, 38px); font-weight: 800; line-height: 1.15;" data-i18n="faq_title">
+              Коротко о главном
+            </h2>
+          </div>
 
-      <div class="cta-buttons">
-        <a href="https://www.rustore.ru/catalog/app/com.cyberfaceit.cs" target="_blank" class="btn btn-yellow">▶ СКАЧАТЬ В RUSTORE</a>
-        <a href="https://t.me/cyberfaceitcs_apk" target="_blank" class="btn btn-dark">◽ Скачать через Telegram</a>
-        <a href="https://cyberfaceitcs.vercel.app" target="_blank" class="btn btn-dark">🌐 ИГРАТЬ В БРАУЗЕРЕ →</a>
+          <div class="faq-list">
+            <div class="faq-item open">
+              <button type="button" class="faq-question" onclick="toggleFaq(this)">
+                <span data-i18n="q1_t">CyberFaceit — это отдельная игра?</span>
+                <span class="faq-icon">▼</span>
+              </button>
+              <div class="faq-answer" data-i18n="q1_d">
+                Нет. Играете вы в самом CounterFlame, а приложение отвечает за подбор соперников, бан карт, голосовой чат и рейтинг. Матч проходит в обычном лобби CounterFlame, хоста назначает сервер.
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button type="button" class="faq-question" onclick="toggleFaq(this)">
+                <span data-i18n="q2_t">Нужен ли аккаунт CounterFlame?</span>
+                <span class="faq-icon">▼</span>
+              </button>
+              <div class="faq-answer" data-i18n="q2_d">
+                Да, для участия в матчах необходимо привязать ваш игровой ID из CounterFlame. По нему соперники и тиммейты будут находить вас для создания лобби.
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button type="button" class="faq-question" onclick="toggleFaq(this)">
+                <span data-i18n="q3_t">Сколько стоит?</span>
+                <span class="faq-icon">▼</span>
+              </button>
+              <div class="faq-answer" data-i18n="q3_d">
+                Базовый рейтинговый матчмейкинг в лиге DEFAULT полностью бесплатен. В магазине доступны косметические предметы (рамки, баннеры, цвет ника) и пропуск в закрытую лигу QUAL.
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button type="button" class="faq-question" onclick="toggleFaq(this)">
+                <span data-i18n="q4_t">Что будет, если соперник выйдет из матча?</span>
+                <span class="faq-icon">▼</span>
+              </button>
+              <div class="faq-answer" data-i18n="q4_d">
+                Вышедший игрок получает штраф к рейтингу и временную блокировку поиска матчей. Оставшиеся игроки фиксируют результат скриншотом, а модератор закрывает матч в пользу честной стороны.
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button type="button" class="faq-question" onclick="toggleFaq(this)">
+                <span data-i18n="q5_t">Можно ли играть с друзьями?</span>
+                <span class="faq-icon">▼</span>
+              </button>
+              <div class="faq-answer" data-i18n="q5_d">
+                Да, вы можете пригласить друзей по статик ID в пати до 2 человек (для режима 2×2) или до 5 человек (для 5×5). Система гарантирует, что вы попадёте в одну команду.
+              </div>
+            </div>
+
+            <div class="faq-item">
+              <button type="button" class="faq-question" onclick="toggleFaq(this)">
+                <span data-i18n="q6_t">На каких устройствах работает?</span>
+                <span class="faq-icon">▼</span>
+              </button>
+              <div class="faq-answer" data-i18n="q6_d">
+                Приложение доступно для Android через RuStore и Telegram, а также работает прямо в браузере на ПК и iOS без установки.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="download" class="cta-banner">
+          <h2 data-i18n="cta_title">Соберите свою пятёрку</h2>
+          <p data-i18n="cta_sub">
+            CyberFaceit уже доступен для Android в RuStore, через Telegram и прямо в браузере на любом устройстве.
+          </p>
+          <div class="hero-buttons" style="margin-bottom: 0;">
+            <a href="https://www.rustore.ru/catalog/app/com.cyberfaceit.cs" class="btn btn-yellow" data-i18n="btn_rustore">▶ СКАЧАТЬ В RUSTORE</a>
+            <a href="https://cyberfaceitcs.vercel.app" class="btn btn-pink" data-i18n="btn_browser">🌐 ИГРАТЬ В БРАУЗЕРЕ →</a>
+            <a href="https://t.me/cyberfaceitcs_apk" class="btn btn-dark" data-i18n="btn_telegram">✈ СКАЧАТЬ ЧЕРЕЗ TELEGRAM</a>
+          </div>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </main>
 
   <footer>
     <div class="container">
-      <div class="footer-top">
+      <div class="footer-grid">
         <div>
-          <a href="#" class="logo" style="margin-bottom:12px;">
-            <img src="logo.png" alt="CyberFaceit" class="logo-img">
+          <div class="brand" style="margin-bottom: 12px;">
+            <img src="logo.png" alt="CyberFaceit Logo" />
             <span>CyberFaceit</span>
-          </a>
-          <p style="max-width:280px;">Соревновательный матчмейкинг 5×5 и 2×2 для CounterFlame.</p>
+          </div>
+          <p style="font-size: 13px; color: var(--text-muted); max-width: 280px;" data-i18n="foot_desc">
+            Соревновательный матчмейкинг 5×5 и 2×2 для CounterFlame.
+          </p>
         </div>
-
         <div class="footer-col">
-          <h5>Продукт</h5>
+          <h4 data-i18n="foot_col1">ПРОДУКТ</h4>
           <ul>
-            <li><a href="#features">Возможности</a></li>
-            <li><a href="#how-it-works">Как это работает</a></li>
-            <li><a href="#rating">Рейтинг</a></li>
-            <li><a href="#faq">Вопросы</a></li>
+            <li><a href="#features" data-i18n="nav_features">Возможности</a></li>
+            <li><a href="#how-it-works" data-i18n="nav_how">Как это работает</a></li>
+            <li><a href="#rating" data-i18n="nav_rating">Рейтинг</a></li>
+            <li><a href="#faq" data-i18n="nav_faq">Вопросы</a></li>
           </ul>
         </div>
-
         <div class="footer-col">
-          <h5>Контакты и ссылки</h5>
+          <h4 data-i18n="foot_col2">КОНТАКТЫ И ССЫЛКИ</h4>
           <ul>
-            <li><a href="https://cyberfaceitcs.vercel.app" target="_blank">Веб-версия платформы</a></li>
-            <li><a href="https://www.rustore.ru/catalog/app/com.cyberfaceit.cs" target="_blank">Скачать в RuStore</a></li>
-            <li><a href="https://t.me/cyberfaceitcs_apk" target="_blank">Скачать через Telegram</a></li>
-            <li><a href="mailto:absa777oper@gmail.com">absa777oper@gmail.com</a></li>
+            <li><a href="#download" data-i18n="foot_web">Веб-версия платформы</a></li>
+            <li><a href="#download" data-i18n="foot_ru">Скачать в RuStore</a></li>
+            <li><a href="#download" data-i18n="foot_tg">Скачать через Telegram</a></li>
+            <li><a href="mailto:support@cyberfaceit.com">support@cyberfaceit.com</a></li>
           </ul>
         </div>
       </div>
 
       <div class="footer-bottom">
-        <span>© 2026 CyberFaceit. Все права защищены.</span>
-        <span>CyberFaceit — независимая платформа для CounterFlame.</span>
+        <span data-i18n="foot_copy">© 2026 CyberFaceit. Все права защищены.</span>
+        <span data-i18n="foot_disc">CyberFaceit — независимая платформа для CounterFlame.</span>
       </div>
     </div>
   </footer>
 
   <script>
-    // FAQ Accordion
-    document.querySelectorAll('.faq-question').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const item = btn.parentElement;
-        const isOpen = item.classList.contains('open');
-        document.querySelectorAll('.faq-item').forEach(i => {
-          i.classList.remove('open');
-          i.querySelector('.faq-arrow').textContent = '⌄';
-        });
-        if (!isOpen) {
-          item.classList.add('open');
-          btn.querySelector('.faq-arrow').textContent = '⌃';
+    const translations = {
+      ru: {
+        nav_features: "Возможности",
+        nav_how: "Как это работает",
+        nav_rating: "Рейтинг",
+        nav_fair: "Честная игра",
+        nav_faq: "Вопросы",
+        nav_download: "Скачать",
+        hero_eyebrow: "COUNTER FLAME • МАТЧИ 5 НА 5 И 2 НА 2",
+        hero_title: "Матчмейкинг, где решает скилл",
+        hero_subtitle: "Собирайте пати, ищите соперников по рейтингу, баньте карты и играйте 5 на 5 или 2 на 2 с командным голосом. Победы, поражения и личная статистика меняют ELO — случайных тиммейтов из публичных лобби здесь нет.",
+        btn_rustore: "▶ СКАЧАТЬ В RUSTORE",
+        btn_telegram: "✈ СКАЧАТЬ ЧЕРЕЗ TELEGRAM",
+        btn_browser: "🌐 ИГРАТЬ В БРАУЗЕРЕ",
+        pill_1: "3 ЛИГИ",
+        pill_2: "4 КАРТЫ В ПУЛЕ",
+        pill_3: "10 УРОВНЕЙ",
+        pill_4: "PC / MOBILE СТАТУСЫ",
+        notif_1_title: "Матч найден",
+        notif_1_desc: "Все игроки подтвердили участие — переходим к бану карт",
+        notif_2_title: "Ваш ход — забаньте карту",
+        notif_2_desc: "Осталось 2 карты • 30 секунд на ход",
+        stats_title: "Всё, что нужно для серьёзной катки",
+        stats_sub: "Платформа берёт на себя подбор, бан карт, лобби и подсчёт результата. Вам остаётся играть.",
+        stat_1: "Форматы матчей",
+        stat_2: "Карты в пуле",
+        stat_3: "Уровней рейтинга",
+        stat_4: "Лиги",
+        feat_eyebrow: "ВОЗМОЖНОСТИ",
+        feat_title: "Турнирные правила в мобильном приложении",
+        feat_sub: "Каждый матч проходит один и тот же путь: подбор, бан карт, лобби, результат, рейтинг. Никаких договорённостей в чате.",
+        f1_t: "Подбор по ELO",
+        f1_d: "Очередь ищет соперников близкого рейтинга и расширяет диапазон, пока вы ждёте. Команды делятся так, чтобы средний рейтинг сторон был как можно ближе.",
+        f2_t: "Пати с друзьями",
+        f2_d: "Зовите друзей по статик ID, собирайте состав до пяти человек и заходите в очередь вместе. Пати не разбивается при формировании команд.",
+        f3_t: "Бан карт капитанами",
+        f3_d: "Четыре карты, три бана по очереди — остаётся одна. Ход длится 30 секунд: по таймауту карта банится автоматически, так что этап никогда не зависает.",
+        f4_t: "Командный голос",
+        f4_d: "Голосовой чат встроен в приложение: отдельная комната на пати и на каждую команду в матче. Микшер громкости, мут в один тап, сторонние приложения не нужны.",
+        f5_t: "Лидерборд и сезоны",
+        f5_d: "Таблица лидеров по каждой лиге и сезону, ранг в профиле, история матчей с K/D/A и дельтой рейтинга за каждую игру.",
+        f6_t: "Магазин и косметика",
+        f6_d: "Рамки, баннеры, флаги, эмодзи и цвет ника за Cyber Coin. Чёрный рынок открывается по расписанию со скидками 40–70%.",
+        how_eyebrow: "КАК ЭТО РАБОТАЕТ",
+        how_title: "От очереди до рейтинга — пять шагов",
+        how_sub: "Сервер ведёт матч сам: у каждой фазы есть таймер и правило выхода.",
+        s1_t: "Очередь",
+        s1_d: "Выбираете лигу и жмёте «Найти матч». Приложение показывает, сколько людей в игре и в поиске прямо сейчас.",
+        s2_t: "Подтверждение",
+        s2_d: "Матч собран — все игроки подтверждают участие за 30 секунд. Кто-то отказался: остальные возвращаются в очередь без потери места.",
+        s3_t: "Бан карт",
+        s3_d: "Капитаны по очереди убирают карты, пока не останется одна. Капитана выбирает жребий: чаще им становится самый опытный игрок команды.",
+        s4_t: "Лобби",
+        s4_d: "Сервер случайно выбирает хоста из двух капитанов и раскрывает его игровой ID из CounterFlame. Копируете, заходите в лобби, играете.",
+        s5_t: "Результат",
+        s5_d: "Любой из участников загружает скриншот таблицы. Счёт распознаётся автоматически, команды голосуют, модератор подтверждает — и ELO пересчитывается.",
+        rat_eyebrow: "РЕЙТИНГ",
+        rat_title: "Понятная система: ELO, уровни, сезоны",
+        rat_sub: "Никаких скрытых коэффициентов. Начисление очков зависит от исхода матча и вашего личного вклада в игру.",
+        r1_t: "Старт с 0 ELO",
+        r1_d: "Новый игрок и новый сезон начинаются с 0 очков и первого уровня. Ниже нуля рейтинг не опускается.",
+        r2_t: "ELO по статистике",
+        r2_d: "Победа +25 / поражение −18, плюс бонус −6…+12 за (K+Д), помощь, урон за раунд и %ГЛ.",
+        r3_t: "Десять уровней",
+        r3_d: "Уровень пересчитывается после каждого матча и может падать — он отражает текущий рейтинг, а не сумму сыгранного.",
+        r4_t: "Сезоны и ладдеры",
+        r4_d: "Сезон обнуляет статистику, но не удаляет историю — прошлые сезоны остаются в профиле. Внутри месяца работают ладдеры по группам уровней.",
+        lg_eyebrow: "ЛИГИ И УСТРОЙСТВА",
+        lg_title: "Три лиги, свой рейтинг в каждой",
+        lg_sub: "Статистика считается отдельно по каждой лиге и сезону — переход в другую лигу не переносит ELO.",
+        lg1_d: "Открытый рейтинговый матчмейкинг. Выдаётся всем игрокам сразу после регистрации.",
+        lg2_d: "Покупается в магазине или открывается бесплатно за топ-30 месячного ладдера 8–10 уровня.",
+        lg3_d: "Закрытая элитная лига — доступ выдаётся вручную.",
+        dev_tag: "СТАТУС ИГРОКА",
+        dev_title: "Значок PC или Телефон в профиле",
+        dev_sub: "В приложении игрок сам выбирает платформу, с которой играет — в лобби и профиле рядом с ником отображается значок PC или Телефона.",
+        dev_pc: "🖥️ PC — Играет с компьютера",
+        dev_mob: "📱 Телефон — Играет с мобильного",
+        map_eyebrow: "КАРТЫ",
+        map_title: "Активный пул карт",
+        map_sub: "Четыре карты — после трёх банов всегда остаётся ровно одна. Играть только на любимой карте не выйдет.",
+        veto_wait: "Ожидание начала вето...",
+        veto_replay: "↻ Повторить бан-пик",
+        badge_pool: "В ПУЛЕ",
+        badge_ban: "БАН",
+        badge_pick: "ИГРАЕМ",
+        veto_step1: "Капитан А банит DUST 2...",
+        veto_step2: "Капитан Б банит MIRAGE...",
+        veto_step3: "Капитан А банит VERTIGO...",
+        veto_done: "Карта выбрана: INFERNO!",
+        fp_eyebrow: "ЧЕСТНАЯ ИГРА",
+        fp_title: "Результат нельзя подделать в одиночку",
+        fp_sub: "Матч закрывается только тогда, когда его подтвердили обе стороны и живой модератор.",
+        fp1_t: "Скриншот вместо честного слова",
+        fp1_d: "Итог матча подтверждается скриншотом таблицы. Один и тот же файл нельзя переиспользовать в другом матче — проверка идёт по хешу.",
+        fp2_t: "Голосование обеих команд",
+        fp2_d: "Скриншот уходит на голосование всем участникам матча. Пока стороны не согласятся, матч не двигается дальше.",
+        fp3_t: "Ручная модерация",
+        fp3_d: "Финальные K/D/A и счёт вносит модератор. Только после этого начисляется рейтинг — отменить уже проверенный матч голосованием нельзя.",
+        fp4_t: "Жалобы и блокировки",
+        fp4_d: "На игрока можно пожаловаться прямо из матча: читы, токсичность, руин, выход из игры.",
+        sh_eyebrow: "ПРОФИЛЬ И МАГАЗИН",
+        sh_title: "Профиль, который видно",
+        sh_sub: "Рамка, баннер, флаг региона, эмодзи и цвет ника — всё это видно соперникам в лобби и в таблице лидеров.",
+        sh_voice_t: "🎙️ Голос команды подключён",
+        sh_voice_d: "Только своя команда — соперник вас не слышит",
+        faq_eyebrow: "ВОПРОСЫ",
+        faq_title: "Коротко о главном",
+        q1_t: "CyberFaceit — это отдельная игра?",
+        q1_d: "Нет. Играете вы в самом CounterFlame, а приложение отвечает за подбор соперников, бан карт, голосовой чат и рейтинг. Матч проходит в обычном лобби CounterFlame, хоста назначает сервер.",
+        q2_t: "Нужен ли аккаунт CounterFlame?",
+        q2_d: "Да, для участия в матчах необходимо привязать ваш игровой ID из CounterFlame. По нему соперники и тиммейты будут находить вас для создания лобби.",
+        q3_t: "Сколько стоит?",
+        q3_d: "Базовый рейтинговый матчмейкинг в лиге DEFAULT полностью бесплатен. В магазине доступны косметические предметы (рамки, баннеры, цвет ника) и пропуск в закрытую лигу QUAL.",
+        q4_t: "Что будет, если соперник выйдет из матча?",
+        q4_d: "Вышедший игрок получает штраф к рейтингу и временную блокировку поиска матчей. Оставшиеся игроки фиксируют результат скриншотом, а модератор закрывает матч в пользу честной стороны.",
+        q5_t: "Можно ли играть с друзьями?",
+        q5_d: "Да, вы можете пригласить друзей по статик ID в пати до 2 человек (для режима 2×2) или до 5 человек (для 5×5). Система гарантирует, что вы попадёте в одну команду.",
+        q6_t: "На каких устройствах работает?",
+        q6_d: "Приложение доступно для Android через RuStore и Telegram, а также работает прямо в браузере на ПК и iOS без установки.",
+        cta_title: "Соберите свою пятёрку",
+        cta_sub: "CyberFaceit уже доступен для Android в RuStore, через Telegram и прямо в браузере на любом устройстве.",
+        foot_desc: "Соревновательный матчмейкинг 5×5 и 2×2 для CounterFlame.",
+        foot_col1: "ПРОДУКТ",
+        foot_col2: "КОНТАКТЫ И ССЫЛКИ",
+        foot_web: "Веб-версия платформы",
+        foot_ru: "Скачать в RuStore",
+        foot_tg: "Скачать через Telegram",
+        foot_copy: "© 2026 CyberFaceit. Все права защищены.",
+        foot_disc: "CyberFaceit — независимая платформа для CounterFlame."
+      },
+      en: {
+        nav_features: "Features",
+        nav_how: "How it works",
+        nav_rating: "Rating",
+        nav_fair: "Fair Play",
+        nav_faq: "FAQ",
+        nav_download: "Download",
+        hero_eyebrow: "COUNTER FLAME • 5V5 AND 2V2 MATCHES",
+        hero_title: "Matchmaking where skill decides",
+        hero_subtitle: "Build your party, find opponents by rating, ban maps, and play 5v5 or 2v2 with team voice chat. Wins, losses, and personal stats change your ELO — no random teammates from public lobbies.",
+        btn_rustore: "▶ DOWNLOAD ON RUSTORE",
+        btn_telegram: "✈ GET VIA TELEGRAM",
+        btn_browser: "🌐 PLAY IN BROWSER",
+        pill_1: "3 LEAGUES",
+        pill_2: "4 MAPS IN POOL",
+        pill_3: "10 LEVELS",
+        pill_4: "PC / MOBILE BADGES",
+        notif_1_title: "Match found",
+        notif_1_desc: "All players accepted — moving to map veto",
+        notif_2_title: "Your turn — ban a map",
+        notif_2_desc: "2 maps left • 30 seconds per turn",
+        stats_title: "Everything you need for a serious match",
+        stats_sub: "The platform handles matchmaking, map veto, lobbies, and score tracking. You just play.",
+        stat_1: "Match formats",
+        stat_2: "Maps in pool",
+        stat_3: "Rating levels",
+        stat_4: "Leagues",
+        feat_eyebrow: "FEATURES",
+        feat_title: "Tournament rules in a mobile app",
+        feat_sub: "Every match follows the exact same flow: queue, map ban, lobby, result, rating. No manual agreements in chat.",
+        f1_t: "ELO Matchmaking",
+        f1_d: "The queue searches for opponents near your rating and expands the range as you wait. Teams are balanced so the average ELO is as close as possible.",
+        f2_t: "Party with Friends",
+        f2_d: "Invite friends via static ID, form a squad of up to five players, and queue together. Parties are never split when forming teams.",
+        f3_t: "Captain Map Veto",
+        f3_d: "Four maps, three alternating bans — one remains. Each turn lasts 30 seconds: on timeout, a map is banned automatically so the veto never stalls.",
+        f4_t: "Team Voice Chat",
+        f4_d: "Built-in voice chat: separate rooms for your party and each match team. Volume mixer, one-tap mute, no third-party apps required.",
+        f5_t: "Leaderboard & Seasons",
+        f5_d: "Leaderboards for every league and season, profile rank badge, and full match history with K/D/A and ELO delta.",
+        f6_t: "Shop & Cosmetics",
+        f6_d: "Frames, banners, region flags, emojis, and nickname colors for Cyber Coins. The Black Market opens on schedule with 40–70% discounts.",
+        how_eyebrow: "HOW IT WORKS",
+        how_title: "From queue to rating in five steps",
+        how_sub: "The server manages the entire match: every phase has a timer and clear rules.",
+        s1_t: "Queue",
+        s1_d: "Choose your league and tap 'Find Match'. The app shows how many players are currently in-game and searching.",
+        s2_t: "Confirmation",
+        s2_d: "Match found — all players have 30 seconds to accept. If someone declines, others return to the queue without losing priority.",
+        s3_t: "Map Ban",
+        s3_d: "Captains take turns banning maps until one remains. Captains are chosen by lot, favoring experienced players.",
+        s4_t: "Lobby",
+        s4_d: "The server randomly picks one captain as host and reveals their CounterFlame ID. Copy it, join the lobby, and play.",
+        s5_t: "Result",
+        s5_d: "Any player uploads the scoreboard screenshot. Scores are parsed automatically, teams vote, a moderator verifies, and ELO updates.",
+        rat_eyebrow: "RATING",
+        rat_title: "Transparent system: ELO, levels, seasons",
+        rat_sub: "No hidden multipliers. Points depend strictly on the match outcome and your individual performance.",
+        r1_t: "Start at 0 ELO",
+        r1_d: "New players and new seasons start at 0 ELO and Level 1. Your rating never drops below zero.",
+        r2_t: "Performance ELO",
+        r2_d: "Win +25 / Loss −18, plus a −6…+12 performance bonus based on (K+D), assists, ADR, and HS%.",
+        r3_t: "Ten Levels",
+        r3_d: "Your level recalculates after every match and can drop — it reflects your current skill, not total games played.",
+        r4_t: "Seasons & Ladders",
+        r4_d: "Seasons reset active stats while keeping past records in your profile. Monthly level-group ladders run independently.",
+        lg_eyebrow: "LEAGUES & DEVICES",
+        lg_title: "Three leagues, separate rating in each",
+        lg_sub: "Stats are tracked separately per league and season — switching leagues does not transfer ELO.",
+        lg1_d: "Open ranked matchmaking. Available to all players immediately after registration.",
+        lg2_d: "Purchased in the shop or unlocked free via Top-30 in the monthly Level 8–10 ladder.",
+        lg3_d: "Closed elite league — access is granted manually.",
+        dev_tag: "PLAYER STATUS",
+        dev_title: "PC or Mobile icon in profile",
+        dev_sub: "Players select their platform in the app — a PC or Mobile badge is displayed next to their nickname in lobbies and leaderboards.",
+        dev_pc: "🖥️ PC — Playing on Computer",
+        dev_mob: "📱 Mobile — Playing on Phone",
+        map_eyebrow: "MAPS",
+        map_title: "Active Map Pool",
+        map_sub: "Four maps — after three bans, exactly one remains. One-tricking a single map won't work here.",
+        veto_wait: "Waiting for veto to start...",
+        veto_replay: "↻ Replay Map Veto",
+        badge_pool: "IN POOL",
+        badge_ban: "BANNED",
+        badge_pick: "PLAYING",
+        veto_step1: "Captain A bans DUST 2...",
+        veto_step2: "Captain B bans MIRAGE...",
+        veto_step3: "Captain A bans VERTIGO...",
+        veto_done: "Selected Map: INFERNO!",
+        fp_eyebrow: "FAIR PLAY",
+        fp_title: "Match results cannot be faked alone",
+        fp_sub: "A match is finalized only after confirmation from both teams and a live moderator.",
+        fp1_t: "Screenshot over word of mouth",
+        fp1_d: "Match results require a scoreboard screenshot. File hashes prevent reusing the same screenshot across matches.",
+        fp2_t: "Two-team voting",
+        fp2_d: "The screenshot is sent to all participants for voting. Until both sides agree, the match does not proceed.",
+        fp3_t: "Manual moderation",
+        fp3_d: "Final K/D/A and scores are verified by a moderator. Only then is ELO awarded — verified matches cannot be reverted.",
+        fp4_t: "Reports & Bans",
+        fp4_d: "Report players directly from the match for cheats, toxicity, griefing, or leaving.",
+        sh_eyebrow: "PROFILE & SHOP",
+        sh_title: "A profile that stands out",
+        sh_sub: "Frames, banners, region flags, emojis, and nickname colors — visible to everyone in lobbies and leaderboards.",
+        sh_voice_t: "🎙️ Team voice connected",
+        sh_voice_d: "Your team only — opponents cannot hear you",
+        faq_eyebrow: "FAQ",
+        faq_title: "Briefly about the main things",
+        q1_t: "Is CyberFaceit a separate game?",
+        q1_d: "No. You play inside CounterFlame itself, while the app handles matchmaking, map bans, voice chat, and ELO. Matches take place in a standard CounterFlame lobby.",
+        q2_t: "Do I need a CounterFlame account?",
+        q2_d: "Yes, you must link your CounterFlame in-game ID so teammates and opponents can find you to set up the match lobby.",
+        q3_t: "How much does it cost?",
+        q3_d: "Standard ranked matchmaking in the DEFAULT league is completely free. Cosmetic items and QUAL league access are available in the shop.",
+        q4_t: "What happens if an opponent leaves the match?",
+        q4_d: "Leavers receive an ELO penalty and a temporary queue ban. Remaining players submit the scoreboard screenshot, and a moderator awards the win fairly.",
+        q5_t: "Can I play with friends?",
+        q5_d: "Yes, invite friends via static ID into a party of up to 2 (for 2v2) or up to 5 (for 5v5). The system always keeps your party on the same team.",
+        q6_t: "Which devices are supported?",
+        q6_d: "Available for Android via RuStore and Telegram, and works directly in any browser on PC and iOS without installation.",
+        cta_title: "Assemble your five",
+        cta_sub: "CyberFaceit is available now for Android on RuStore, via Telegram, and directly in your browser on any device.",
+        foot_desc: "Competitive 5v5 and 2v2 matchmaking for CounterFlame.",
+        foot_col1: "PRODUCT",
+        foot_col2: "CONTACTS & LINKS",
+        foot_web: "Web platform version",
+        foot_ru: "Download on RuStore",
+        foot_tg: "Download via Telegram",
+        foot_copy: "© 2026 CyberFaceit. All rights reserved.",
+        foot_disc: "CyberFaceit is an independent platform for CounterFlame."
+      }
+    };
+
+    let currentLang = 'ru';
+    let vetoTimers = [];
+    let vetoState = 'idle';
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      document.documentElement.lang = lang;
+      document.getElementById('btn-ru').classList.toggle('active', lang === 'ru');
+      document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+
+      const dict = translations[lang];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key]) el.textContent = dict[key];
+      });
+      updateVetoLabels();
+    }
+
+    function toggleFaq(btn) {
+      const item = btn.parentElement;
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    }
+
+    function updateVetoLabels() {
+      const dict = translations[currentLang];
+      const statusEl = document.getElementById('veto-status');
+      if (vetoState === 'idle') statusEl.textContent = dict.veto_wait;
+      if (vetoState === 'step1') statusEl.textContent = dict.veto_step1;
+      if (vetoState === 'step2') statusEl.textContent = dict.veto_step2;
+      if (vetoState === 'step3') statusEl.textContent = dict.veto_step3;
+      if (vetoState === 'done') statusEl.textContent = dict.veto_done;
+
+      for (let i = 0; i < 4; i++) {
+        const card = document.getElementById(`map-${i}`);
+        const badge = document.getElementById(`badge-${i}`);
+        if (card.classList.contains('banned')) badge.textContent = dict.badge_ban;
+        else if (card.classList.contains('picked')) badge.textContent = dict.badge_pick;
+        else badge.textContent = dict.badge_pool;
+      }
+    }
+
+    function startVetoAnimation() {
+      vetoTimers.forEach(t => clearTimeout(t));
+      vetoTimers = [];
+
+      for (let i = 0; i < 4; i++) {
+        document.getElementById(`map-${i}`).classList.remove('selecting', 'banned', 'picked');
+      }
+      vetoState = 'idle';
+      updateVetoLabels();
+
+      const banSequence = [
+        { mapIdx: 0, stateKey: 'step1', delay: 500 },
+        { mapIdx: 3, stateKey: 'step2', delay: 1700 },
+        { mapIdx: 1, stateKey: 'step3', delay: 2900 }
+      ];
+
+      banSequence.forEach(step => {
+        vetoTimers.push(setTimeout(() => {
+          vetoState = step.stateKey;
+          updateVetoLabels();
+          document.getElementById(`map-${step.mapIdx}`).classList.add('selecting');
+        }, step.delay));
+
+        vetoTimers.push(setTimeout(() => {
+          const card = document.getElementById(`map-${step.mapIdx}`);
+          card.classList.remove('selecting');
+          card.classList.add('banned');
+          updateVetoLabels();
+        }, step.delay + 650));
+      });
+
+      vetoTimers.push(setTimeout(() => {
+        vetoState = 'done';
+        document.getElementById('map-2').classList.add('picked');
+        updateVetoLabels();
+      }, 4100));
+    }
+
+    let vetoPlayedOnScroll = false;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          if (entry.target.id === 'map-pool' && !vetoPlayedOnScroll) {
+            vetoPlayedOnScroll = true;
+            startVetoAnimation();
+          }
         }
       });
-    });
+    }, { threshold: 0.12 });
 
-    // Mobile Menu Toggle
-    const burgerBtn = document.getElementById('burgerBtn');
-    const navLinks = document.getElementById('navLinks');
-    burgerBtn.addEventListener('click', () => {
-      if (navLinks.style.display === 'flex') {
-        navLinks.style.display = 'none';
-      } else {
-        navLinks.style.display = 'flex';
-        navLinks.style.flexDirection = 'column';
-        navLinks.style.position = 'absolute';
-        navLinks.style.top = '64px';
-        navLinks.style.left = '16px';
-        navLinks.style.right = '16px';
-        navLinks.style.background = '#120f14';
-        navLinks.style.padding = '16px';
-        navLinks.style.borderRadius = '14px';
-        navLinks.style.border = '1px solid rgba(255,255,255,0.1)';
-      }
-    });
+    document.querySelectorAll('.reveal').forEach(section => observer.observe(section));
   </script>
 </body>
 </html>
